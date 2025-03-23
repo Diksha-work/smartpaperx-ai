@@ -1,141 +1,150 @@
 
 import React, { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Dialog } from "@/components/ui/dialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+// Define the form schema with validation
+const formSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSignupClick?: () => void; // Optional prop to handle switching to signup modal
+  onSignupClick: () => void;
 }
 
 export function LoginModal({ isOpen, onClose, onSignupClick }: LoginModalProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { login, redirectAfterLogin } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    setIsSubmitting(true);
+    setError(null);
     
     try {
-      await login(email, password);
-      setEmail("");
-      setPassword("");
-      // After successful login, redirect to the intended page
-      redirectAfterLogin();
+      await login(data.email, data.password);
+      form.reset();
       onClose();
+      // Redirect user to their intended destination
+      redirectAfterLogin();
     } catch (err) {
-      // Error is already handled in the auth context
-      console.error(err);
+      // Error is already handled in the login function via toast
+      setError("Failed to login. Please check your credentials.");
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Log In</DialogTitle>
+          <DialogTitle>Login to your account</DialogTitle>
           <DialogDescription>
-            Log in to access all features
+            Enter your email and password to login.
           </DialogDescription>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="login-email">Email</Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="login-email"
-                type="email"
-                placeholder="you@example.com"
-                className="pl-10"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="login-password">Password</Label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="login-password"
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                className="pl-10"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute right-3 top-3"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="youremail@example.com" 
+                      {...field} 
+                      type="email" 
+                      autoComplete="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="••••••••" 
+                      type="password" 
+                      {...field} 
+                      autoComplete="current-password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-5">
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isSubmitting}
               >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4 text-muted-foreground" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Logging in...
+                  </>
                 ) : (
-                  <Eye className="h-4 w-4 text-muted-foreground" />
+                  "Login"
                 )}
-              </button>
-            </div>
-          </div>
-          
-          {/* Sign up link - only show if onSignupClick is provided */}
-          {onSignupClick && (
-            <div className="text-center text-sm">
-              Don't have an account?{" "}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSignupClick();
-                }}
-                className="text-primary hover:underline font-medium"
-              >
-                Sign up
-              </button>
-            </div>
-          )}
-          
-          <DialogFooter className="pt-4">
-            <Button
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+        
+        <div className="text-center mt-2">
+          <p className="text-sm text-muted-foreground">
+            Don't have an account?{" "}
+            <button
               type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={loading}
+              className="text-primary hover:underline focus:outline-none"
+              onClick={onSignupClick}
             >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Log In"}
-            </Button>
-          </DialogFooter>
-        </form>
+              Sign up
+            </button>
+          </p>
+        </div>
       </DialogContent>
     </Dialog>
   );
