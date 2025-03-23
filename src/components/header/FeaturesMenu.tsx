@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Check, ChevronDown, FileText, FlaskConical, Layers, Lightbulb, MessagesSquare, ScrollText, MenuIcon } from "lucide-react";
 import {
@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { SignupModal } from "@/components/auth/SignupModal";
+import { LoginModal } from "@/components/auth/LoginModal";
 
 interface FeaturesMenuProps {
   isMobile?: boolean;
@@ -20,6 +22,8 @@ interface FeaturesMenuProps {
 export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) => {
   const navigate = useNavigate();
   const { currentUser, setRedirectPath } = useAuth();
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const features = [
     {
@@ -64,8 +68,8 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
     if (!currentUser) {
       // Store the path for redirect after login
       setRedirectPath(path);
-      // Navigate to home to trigger login modal
-      navigate('/');
+      // Show signup modal instead of redirecting
+      setShowSignupModal(true);
       return;
     }
     
@@ -73,62 +77,110 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
     navigate(path);
   };
 
+  // Handle modal switching
+  const handleSwitchToLogin = () => {
+    setShowSignupModal(false);
+    setShowLoginModal(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowLoginModal(false);
+    setShowSignupModal(true);
+  };
+
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    // After login, the redirect happens automatically via the AuthContext
+  };
+
   if (isMobile) {
     return (
-      <div className="py-2">
-        <div className="mb-2 px-3 text-lg font-medium">Features</div>
-        <ul className="space-y-1">
-          {features.map((feature) => (
-            <li key={feature.name}>
-              <button
-                onClick={() => handleFeatureClick(feature.path)}
-                className="w-full text-left px-3 py-2 text-foreground/80 hover:text-foreground hover:bg-accent/50 rounded-md flex items-center"
-              >
-                {feature.icon}
-                {feature.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <>
+        <div className="py-2">
+          <div className="mb-2 px-3 text-lg font-medium">Features</div>
+          <ul className="space-y-1">
+            {features.map((feature) => (
+              <li key={feature.name}>
+                <button
+                  onClick={() => handleFeatureClick(feature.path)}
+                  className="w-full text-left px-3 py-2 text-foreground/80 hover:text-foreground hover:bg-accent/50 rounded-md flex items-center"
+                >
+                  {feature.icon}
+                  {feature.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        {/* Add modals */}
+        <SignupModal 
+          isOpen={showSignupModal} 
+          onClose={() => setShowSignupModal(false)} 
+          onSuccess={handleSwitchToLogin}
+          onLoginClick={handleSwitchToLogin}
+        />
+        
+        <LoginModal 
+          isOpen={showLoginModal} 
+          onClose={() => setShowLoginModal(false)}
+          onSignupClick={handleSwitchToSignup}
+        />
+      </>
     );
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className={cn(
-            "flex items-center gap-1 text-foreground/80 hover:text-foreground",
-            isMobile && "justify-start w-full"
-          )}
-        >
-          Features
-          <ChevronDown size={16} />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-[240px]">
-        {features.map((feature, index) => (
-          <React.Fragment key={feature.name}>
-            <DropdownMenuItem
-              onClick={() => handleFeatureClick(feature.path)}
-              className="flex items-start py-2 px-3 cursor-pointer"
-            >
-              <div className="flex items-center">
-                <div className="mr-2">{feature.icon}</div>
-                <div>
-                  <p className="font-medium">{feature.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {feature.description}
-                  </p>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className={cn(
+              "flex items-center gap-1 text-foreground/80 hover:text-foreground",
+              isMobile && "justify-start w-full"
+            )}
+          >
+            Features
+            <ChevronDown size={16} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-[240px]">
+          {features.map((feature, index) => (
+            <React.Fragment key={feature.name}>
+              <DropdownMenuItem
+                onClick={() => handleFeatureClick(feature.path)}
+                className="flex items-start py-2 px-3 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  <div className="mr-2">{feature.icon}</div>
+                  <div>
+                    <p className="font-medium">{feature.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </DropdownMenuItem>
-            {index < features.length - 1 && <DropdownMenuSeparator />}
-          </React.Fragment>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+              </DropdownMenuItem>
+              {index < features.length - 1 && <DropdownMenuSeparator />}
+            </React.Fragment>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      {/* Add modals */}
+      <SignupModal 
+        isOpen={showSignupModal} 
+        onClose={() => setShowSignupModal(false)} 
+        onSuccess={handleSwitchToLogin}
+        onLoginClick={handleSwitchToLogin}
+      />
+      
+      <LoginModal 
+        isOpen={showLoginModal} 
+        onClose={() => setShowLoginModal(false)}
+        onSignupClick={handleSwitchToSignup}
+      />
+    </>
   );
 };
