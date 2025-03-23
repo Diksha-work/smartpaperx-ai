@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ContentGenerator from "./pages/ContentGenerator";
@@ -30,24 +30,22 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Index />} />
-                <Route path="/content-generator" element={<ContentGenerator />} />
-                <Route path="/quiz-generator" element={<QuizGenerator />} />
-                <Route path="/learning-materials" element={<LearningMaterials />} />
-                <Route path="/notes-generator" element={<NotesGenerator />} />
-                <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
-                <Route path="/learning-assistant" element={<LearningAssistant />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/content-generator" element={<ContentGenerator />} />
+              <Route path="/quiz-generator" element={<QuizGenerator />} />
+              <Route path="/learning-materials" element={<LearningMaterials />} />
+              <Route path="/notes-generator" element={<NotesGenerator />} />
+              <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
+              <Route path="/learning-assistant" element={<LearningAssistant />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
