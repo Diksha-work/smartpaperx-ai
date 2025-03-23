@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { generateWithLangChain } from "@/utils/langchainUtils";
 
 interface AIFeatureProps {
   title: string;
@@ -31,7 +31,6 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
   const [pdfFilename, setPdfFilename] = useState("");
   const { toast } = useToast();
   
-  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const resultRef = React.useRef<HTMLDivElement>(null);
 
   const generateContent = async () => {
@@ -48,64 +47,12 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
     setResult("");
 
     try {
-      // Create a prompt based on the feature type
-      let systemPrompt = "";
-      switch (feature) {
-        case "content":
-          systemPrompt = "Generate structured educational content based on the following prompt. Include headings, explanations, examples, and key points. Format your response in markdown.";
-          break;
-        case "quiz":
-          systemPrompt = "Generate a quiz based on the following prompt. Include a mix of multiple choice, true/false, and short answer questions. Format your response in markdown.";
-          break;
-        case "materials":
-          systemPrompt = "Generate a comprehensive learning roadmap or materials list based on the following prompt. Include resources, steps, and recommendations. Format your response in markdown.";
-          break;
-        case "notes":
-          systemPrompt = "Generate concise, organized notes based on the following prompt. Include key concepts, definitions, and important information. Format your response in markdown.";
-          break;
-        case "flashcards":
-          systemPrompt = "Generate flashcards based on the following prompt. Format as Question: [question] and Answer: [answer] pairs. Make them concise and focused on key information.";
-          break;
-        case "assistant":
-          systemPrompt = "You are an educational assistant. Provide a helpful, accurate response to the following question or request.";
-          break;
-      }
-
-      // Updated API endpoint to use gemini-1.5-pro model which is recommended
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [
-                { text: `${systemPrompt}\n\n${prompt}` }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
-          },
-        }),
-      });
-
-      const data = await response.json();
+      // Use LangChain to generate content
+      const generatedContent = await generateWithLangChain(feature, prompt);
+      setResult(generatedContent);
       
-      if (data.candidates && data.candidates[0]?.content?.parts?.length > 0) {
-        setResult(data.candidates[0].content.parts[0].text);
-        // Set default PDF filename based on feature type
-        setPdfFilename(`${feature}_${new Date().toISOString().slice(0, 10)}`);
-      } else if (data.error) {
-        throw new Error(`API Error: ${data.error.message || JSON.stringify(data.error)}`);
-      } else {
-        throw new Error("No response generated");
-      }
+      // Set default PDF filename based on feature type
+      setPdfFilename(`${feature}_${new Date().toISOString().slice(0, 10)}`);
     } catch (error) {
       console.error("Error generating content:", error);
       toast({
