@@ -16,6 +16,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts/AuthContext";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface FeaturesMenuProps {
   isMobile?: boolean;
@@ -38,8 +44,10 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
     if (!currentUser) {
       e.preventDefault();
       setRedirectPath(path);
+      navigate("/");
+    } else {
+      navigate(path);
     }
-    navigate(path);
   };
 
   if (isMobile) {
@@ -54,12 +62,7 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
               <Link 
                 to={link.path}
                 className="py-2 w-full text-foreground/80 hover:text-foreground hover:bg-muted"
-                onClick={(e) => {
-                  if (!currentUser) {
-                    e.preventDefault();
-                    setRedirectPath(link.path);
-                  }
-                }}
+                onClick={(e) => handleFeatureClick(e, link.path)}
               >
                 {link.name}
               </Link>
@@ -80,19 +83,24 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
           <NavigationMenuContent>
             <div className="flex flex-col w-48 p-2 bg-white dark:bg-gray-900 rounded-md shadow-md">
               {featureLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="px-3 py-2 text-sm font-medium rounded-md text-foreground/80 hover:text-foreground hover:bg-muted transition-colors"
-                  onClick={(e) => {
-                    if (!currentUser) {
-                      e.preventDefault();
-                      setRedirectPath(link.path);
-                    }
-                  }}
-                >
-                  {link.name}
-                </Link>
+                <TooltipProvider key={link.name}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        to={link.path}
+                        className="px-3 py-2 text-sm font-medium rounded-md text-foreground/80 hover:text-foreground hover:bg-muted transition-colors"
+                        onClick={(e) => handleFeatureClick(e, link.path)}
+                      >
+                        {link.name}
+                      </Link>
+                    </TooltipTrigger>
+                    {!currentUser && (
+                      <TooltipContent>
+                        <p>Please sign in to access this feature</p>
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </div>
           </NavigationMenuContent>

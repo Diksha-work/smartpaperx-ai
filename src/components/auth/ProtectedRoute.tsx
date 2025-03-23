@@ -13,18 +13,20 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, loading, setRedirectPath } = useAuth();
   const location = useLocation();
   const [showAuthAlert, setShowAuthAlert] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-    // If not loading and no user, show auth alert
+    // If not loading and no user, show auth alert and set redirect path
     if (!loading && !currentUser) {
       setShowAuthAlert(true);
+      // Store the current path for redirect after login
+      setRedirectPath(location.pathname);
     }
-  }, [currentUser, loading]);
+  }, [currentUser, loading, location.pathname, setRedirectPath]);
 
   // Handle signup flow
   const handleSignupClick = () => {

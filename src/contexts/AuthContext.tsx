@@ -52,6 +52,9 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
       setRedirectPath(null);
     } else if (location.state && location.state.from) {
       navigate(location.state.from.pathname);
+    } else {
+      // If no redirect path, stay on current page
+      navigate(location.pathname);
     }
   };
 
