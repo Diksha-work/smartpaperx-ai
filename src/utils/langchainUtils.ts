@@ -24,36 +24,60 @@ const getGoogleAI = () => {
   });
 };
 
-// Define prompt templates for each feature
+// Define prompt templates for each feature with formatting guidelines
 const promptTemplates = {
   content: PromptTemplate.fromTemplate(
     `Generate structured educational content based on the following prompt. 
-    Include headings, explanations, examples, and key points. 
-    Format your response in markdown.
+    Include headings, explanations, examples, and key points.
+    
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear section headings
+    - Use simple bullet points or numbered lists where needed
+    - Add spacing between sections for readability
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
     
     PROMPT: {userPrompt}`
   ),
   
   quiz: PromptTemplate.fromTemplate(
     `Generate a quiz based on the following prompt. 
-    Include a mix of multiple choice, true/false, and short answer questions. 
-    Format your response in markdown.
+    Include a mix of multiple choice, true/false, and short answer questions.
+    
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear section headings
+    - Use simple bullet points or numbered lists for questions
+    - Add spacing between questions and sections
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
     
     PROMPT: {userPrompt}`
   ),
   
   materials: PromptTemplate.fromTemplate(
     `Generate a comprehensive learning roadmap or materials list based on the following prompt. 
-    Include resources, steps, and recommendations. 
-    Format your response in markdown.
+    Include resources, steps, and recommendations.
+    
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear section headings
+    - Use simple bullet points or numbered lists where needed
+    - Add spacing between sections for readability
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
     
     PROMPT: {userPrompt}`
   ),
   
   notes: PromptTemplate.fromTemplate(
     `Generate concise, organized notes based on the following prompt. 
-    Include key concepts, definitions, and important information. 
-    Format your response in markdown.
+    Include key concepts, definitions, and important information.
+    
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear section headings
+    - Use simple bullet points or numbered lists for key points
+    - Add spacing between sections for readability
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
     
     PROMPT: {userPrompt}`
   ),
@@ -63,11 +87,24 @@ const promptTemplates = {
     Format as Question: [question] and Answer: [answer] pairs. 
     Make them concise and focused on key information.
     
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear labeling for questions and answers
+    - Add spacing between each flashcard for readability
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
+    
     PROMPT: {userPrompt}`
   ),
   
   assistant: PromptTemplate.fromTemplate(
     `You are an educational assistant. Provide a helpful, accurate response to the following question or request.
+    
+    IMPORTANT FORMATTING GUIDELINES:
+    - DO NOT use markdown syntax (no **, *, _, or backticks)
+    - Use plain text with clear section headings where needed
+    - Use simple bullet points or numbered lists if appropriate
+    - Add spacing between sections for readability
+    - If code examples are needed, present them as plain text (without syntax highlighting markers)
     
     QUESTION: {userPrompt}
     
