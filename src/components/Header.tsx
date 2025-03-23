@@ -72,6 +72,17 @@ const Header = () => {
     setShowLoginModal(true);
   };
 
+  // Add handlers for switching between modals
+  const handleSwitchToLogin = () => {
+    setShowSignupModal(false);
+    setShowLoginModal(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowLoginModal(false);
+    setShowSignupModal(true);
+  };
+
   return (
     <>
       <header
@@ -130,11 +141,13 @@ const Header = () => {
         isOpen={showSignupModal} 
         onClose={() => setShowSignupModal(false)} 
         onSuccess={handleSignupSuccess}
+        onLoginClick={handleSwitchToLogin}
       />
       
       <LoginModal 
         isOpen={showLoginModal} 
-        onClose={() => setShowLoginModal(false)} 
+        onClose={() => setShowLoginModal(false)}
+        onSignupClick={handleSwitchToSignup}
       />
     </>
   );
