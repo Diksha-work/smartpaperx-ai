@@ -1,6 +1,8 @@
 
 import { PromptTemplate } from "@langchain/core/prompts";
-import { GoogleGenerativeAI } from "@langchain/google-genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
@@ -12,7 +14,14 @@ const getGoogleAI = () => {
     throw new Error("VITE_GEMINI_API_KEY is not defined in environment variables");
   }
   
-  return new GoogleGenerativeAI(API_KEY);
+  return new ChatGoogleGenerativeAI({
+    apiKey: API_KEY,
+    modelName: "gemini-1.5-pro",
+    maxOutputTokens: 2048,
+    temperature: 0.7,
+    topK: 40,
+    topP: 0.95,
+  });
 };
 
 // Define prompt templates for each feature
@@ -68,18 +77,7 @@ const promptTemplates = {
 
 // Create a chain for generating content with Gemini
 export const createGenerationChain = (feature: keyof typeof promptTemplates) => {
-  const googleAI = getGoogleAI();
-  
-  // Use the gemini-1.5-pro model
-  const model = googleAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
-    generationConfig: {
-      temperature: 0.7,
-      topK: 40,
-      topP: 0.95,
-      maxOutputTokens: 2048,
-    },
-  });
+  const model = getGoogleAI();
   
   // Create the chain
   const chain = RunnableSequence.from([

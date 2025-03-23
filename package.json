@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "@hookform/resolvers": "^3.9.0",
     "@langchain/core": "^0.3.42",
     "@langchain/google-genai": "^0.1.11",
