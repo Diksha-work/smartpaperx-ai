@@ -1,4 +1,3 @@
-
 import React from "react";
 import { TeamMember } from "./TeamMember";
 
@@ -14,7 +13,7 @@ export const OurTeam = () => {
       name: "Aaron Sonnie",
       role: "Founder & Lead Developer",
       bio: "Passionate about creating innovative educational solutions. Leads the technical development and strategic direction of Aptora.",
-      photoUrl: aaronPhoto,
+      photoUrl: "/lovable-uploads/7ac96ef4-2820-482a-ae2e-a05176205147.png",
       linkedin: "https://linkedin.com/in/aaronsonnie",
       github: "https://github.com/aaronsonnie",
       email: "aaron@aptora.com"
