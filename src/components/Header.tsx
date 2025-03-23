@@ -1,38 +1,16 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Mail, Phone, LogIn, UserRound } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SignupModal } from "@/components/auth/SignupModal";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { UserMenu } from "./header/UserMenu";
+import { DesktopNavigation } from "./header/DesktopNavigation";
+import { MobileNavigation } from "./header/MobileNavigation";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +18,7 @@ const Header = () => {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const location = useLocation();
-  const { currentUser, signOut } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     setIsOpen(false);
@@ -59,15 +37,6 @@ const Header = () => {
     { name: "Testimonials", path: "/#testimonials" },
     { name: "FAQ", path: "/faq" },
     { name: "About Us", path: "/#about" },
-  ];
-
-  const featureLinks = [
-    { name: "Content Generator", path: "/content-generator" },
-    { name: "Quiz Generator", path: "/quiz-generator" },
-    { name: "E-learning Materials", path: "/learning-materials" },
-    { name: "AI Notes Generator", path: "/notes-generator" },
-    { name: "Flashcard Generator", path: "/flashcard-generator" },
-    { name: "AI Learning Assistant", path: "/learning-assistant" },
   ];
 
   const handleSectionClick = (e, sectionId) => {
@@ -103,19 +72,6 @@ const Header = () => {
     setShowLoginModal(true);
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
-
-  const getUserInitials = () => {
-    if (!currentUser || !currentUser.email) return "U";
-    return currentUser.email.charAt(0).toUpperCase();
-  };
-
   return (
     <>
       <header
@@ -131,146 +87,15 @@ const Header = () => {
             <span className="font-bold text-xl">Aptora</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link 
-              to="/" 
-              className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground"
-            >
-              Home
-            </Link>
-            
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
-                    <span className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground">Features</span>
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="flex flex-col w-48 p-2 bg-white dark:bg-gray-900 rounded-md shadow-md">
-                      {featureLinks.map((link) => (
-                        <Link
-                          key={link.name}
-                          to={link.path}
-                          className="px-3 py-2 text-sm font-medium rounded-md text-foreground/80 hover:text-foreground hover:bg-muted transition-colors"
-                        >
-                          {link.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            
-            {mainNavLinks.map((link) => {
-              if (link.path.includes('#')) {
-                const sectionId = link.path.split('#')[1];
-                return (
-                  <a
-                    key={link.name}
-                    href={link.path}
-                    onClick={(e) => handleSectionClick(e, sectionId)}
-                    className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground cursor-pointer"
-                  >
-                    {link.name}
-                  </a>
-                );
-              } else {
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground"
-                  >
-                    {link.name}
-                  </Link>
-                );
-              }
-            })}
-
-            <TooltipProvider>
-              <Popover>
-                <PopoverTrigger className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground">
-                  Contact
-                </PopoverTrigger>
-                <PopoverContent 
-                  className="w-64 p-4 bg-white dark:bg-gray-900 rounded-md shadow-md"
-                  sideOffset={5}
-                >
-                  <div className="space-y-3">
-                    <h3 className="text-sm font-medium mb-2">Contact Information</h3>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Mail className="h-4 w-4 text-primary" />
-                      <a href="mailto:aaronsonnie@gmail.com" className="text-foreground/80 hover:text-foreground">
-                        aaronsonnie@gmail.com
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Phone className="h-4 w-4 text-primary" />
-                      <a href="tel:+919944226180" className="text-foreground/80 hover:text-foreground">
-                        +91 9944226180
-                      </a>
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </TooltipProvider>
-            
-            {currentUser ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="p-2" aria-label="User menu">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        {getUserInitials()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-3 py-2 text-sm font-medium text-foreground/80">
-                    {currentUser.email}
-                  </div>
-                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button 
-                onClick={handleSignupClick}
-                variant="ghost" 
-                size="sm"
-                className="nav-link font-medium text-sm text-primary hover:text-primary/90 hover:bg-transparent"
-              >
-                Sign up
-              </Button>
-            )}
-            
-            <ThemeToggle />
-          </nav>
+          <DesktopNavigation 
+            mainNavLinks={mainNavLinks}
+            onSectionClick={handleSectionClick}
+            onSignupClick={handleSignupClick}
+          />
 
           <div className="md:hidden flex items-center gap-2">
             {currentUser ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="p-1" aria-label="User menu">
-                    <Avatar className="h-7 w-7">
-                      <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                        {getUserInitials()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-3 py-2 text-sm font-medium text-foreground/80">
-                    {currentUser.email}
-                  </div>
-                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserMenu size="sm" />
             ) : (
               <Button
                 onClick={handleSignupClick}
@@ -292,97 +117,12 @@ const Header = () => {
           </div>
         </div>
 
-        <div
-          className={cn(
-            "md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 shadow-md transition-all duration-300 ease-in-out overflow-hidden z-50",
-            isOpen ? "max-h-[100vh] py-4" : "max-h-0"
-          )}
-        >
-          <div className="container mx-auto px-4 flex flex-col space-y-4">
-            <Link
-              to="/"
-              className="py-2 text-foreground/80 hover:text-foreground"
-            >
-              Home
-            </Link>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center justify-between py-2 text-foreground/80 hover:text-foreground bg-transparent border-none w-full text-left">
-                Features <ChevronDown className="h-4 w-4 ml-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white dark:bg-gray-900 w-full min-w-[200px] z-50">
-                {featureLinks.map((link) => (
-                  <DropdownMenuItem key={link.name} asChild>
-                    <Link 
-                      to={link.path}
-                      className="py-2 w-full text-foreground/80 hover:text-foreground hover:bg-muted"
-                    >
-                      {link.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            {mainNavLinks.map((link) => {
-              if (link.path.includes('#')) {
-                const sectionId = link.path.split('#')[1];
-                return (
-                  <a
-                    key={link.name}
-                    href={link.path}
-                    onClick={(e) => handleSectionClick(e, sectionId)}
-                    className="py-2 text-foreground/80 hover:text-foreground cursor-pointer"
-                  >
-                    {link.name}
-                  </a>
-                );
-              } else {
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className="py-2 text-foreground/80 hover:text-foreground"
-                  >
-                    {link.name}
-                  </Link>
-                );
-              }
-            })}
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center justify-between py-2 text-foreground/80 hover:text-foreground bg-transparent border-none w-full text-left">
-                Contact <ChevronDown className="h-4 w-4 ml-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white dark:bg-gray-900 w-full p-3 min-w-[200px] z-50">
-                <div className="space-y-3 py-1">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Mail className="h-4 w-4 text-primary" />
-                    <a href="mailto:aaronsonnie@gmail.com" className="text-foreground/80 hover:text-foreground">
-                      aaronsonnie@gmail.com
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Phone className="h-4 w-4 text-primary" />
-                    <a href="tel:+919944226180" className="text-foreground/80 hover:text-foreground">
-                      +91 9944226180
-                    </a>
-                  </div>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            {!currentUser && (
-              <Button
-                onClick={handleSignupClick}
-                className="justify-start font-medium text-primary hover:text-primary/90 hover:bg-transparent"
-                variant="ghost"
-              >
-                Sign up
-              </Button>
-            )}
-          </div>
-        </div>
+        <MobileNavigation 
+          isOpen={isOpen}
+          mainNavLinks={mainNavLinks}
+          onSectionClick={handleSectionClick}
+          onSignupClick={handleSignupClick}
+        />
       </header>
 
       {/* Modals */}
