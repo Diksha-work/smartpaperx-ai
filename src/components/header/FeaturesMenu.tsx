@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import {
   NavigationMenu,
@@ -15,12 +15,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface FeaturesMenuProps {
   isMobile?: boolean;
 }
 
 export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) => {
+  const { currentUser, setRedirectPath } = useAuth();
+  const navigate = useNavigate();
+  
   const featureLinks = [
     { name: "Content Generator", path: "/content-generator" },
     { name: "Quiz Generator", path: "/quiz-generator" },
@@ -29,6 +33,14 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
     { name: "Flashcard Generator", path: "/flashcard-generator" },
     { name: "AI Learning Assistant", path: "/learning-assistant" },
   ];
+
+  const handleFeatureClick = (e: React.MouseEvent, path: string) => {
+    if (!currentUser) {
+      e.preventDefault();
+      setRedirectPath(path);
+    }
+    navigate(path);
+  };
 
   if (isMobile) {
     return (
@@ -42,6 +54,12 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
               <Link 
                 to={link.path}
                 className="py-2 w-full text-foreground/80 hover:text-foreground hover:bg-muted"
+                onClick={(e) => {
+                  if (!currentUser) {
+                    e.preventDefault();
+                    setRedirectPath(link.path);
+                  }
+                }}
               >
                 {link.name}
               </Link>
@@ -66,6 +84,12 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
                   key={link.name}
                   to={link.path}
                   className="px-3 py-2 text-sm font-medium rounded-md text-foreground/80 hover:text-foreground hover:bg-muted transition-colors"
+                  onClick={(e) => {
+                    if (!currentUser) {
+                      e.preventDefault();
+                      setRedirectPath(link.path);
+                    }
+                  }}
                 >
                   {link.name}
                 </Link>

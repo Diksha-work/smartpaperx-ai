@@ -24,7 +24,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, redirectAfterLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +34,8 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       await login(email, password);
       setEmail("");
       setPassword("");
+      // After successful login, redirect to the intended page
+      redirectAfterLogin();
       onClose();
     } catch (err) {
       // Error is already handled in the auth context

@@ -11,6 +11,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "@/lib/firebase";
 import { toast } from "sonner";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -22,6 +23,8 @@ type AuthContextType = {
   signup: (email: string, password: string) => Promise<User>;
   login: (email: string, password: string) => Promise<User>;
   signOut: () => Promise<void>;
+  redirectAfterLogin: () => void;
+  setRedirectPath: (path: string) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,6 +40,19 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [redirectPath, setRedirectPath] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Redirect function
+  const redirectAfterLogin = () => {
+    if (redirectPath) {
+      navigate(redirectPath);
+      setRedirectPath(null);
+    } else if (location.state && location.state.from) {
+      navigate(location.state.from.pathname);
+    }
+  };
 
   // Sign up function
   const signup = async (email: string, password: string) => {
@@ -102,7 +118,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     signup,
     login,
-    signOut
+    signOut,
+    redirectAfterLogin,
+    setRedirectPath: (path: string) => setRedirectPath(path)
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
