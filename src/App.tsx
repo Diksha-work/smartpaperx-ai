@@ -18,6 +18,7 @@ import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
 import { Layout } from "./components/Layout";
 import { useState } from "react";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const App = () => {
   // Create QueryClient inside the component
@@ -25,28 +26,30 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/content-generator" element={<ContentGenerator />} />
-              <Route path="/quiz-generator" element={<QuizGenerator />} />
-              <Route path="/learning-materials" element={<LearningMaterials />} />
-              <Route path="/notes-generator" element={<NotesGenerator />} />
-              <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
-              <Route path="/learning-assistant" element={<LearningAssistant />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/cookie-policy" element={<CookiePolicy />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Index />} />
+                <Route path="/content-generator" element={<ContentGenerator />} />
+                <Route path="/quiz-generator" element={<QuizGenerator />} />
+                <Route path="/learning-materials" element={<LearningMaterials />} />
+                <Route path="/notes-generator" element={<NotesGenerator />} />
+                <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
+                <Route path="/learning-assistant" element={<LearningAssistant />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
