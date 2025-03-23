@@ -18,9 +18,10 @@ interface SignupModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  onLoginClick: () => void; // New prop to handle switching to login modal
 }
 
-export function SignupModal({ isOpen, onClose, onSuccess }: SignupModalProps) {
+export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: SignupModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -141,6 +142,21 @@ export function SignupModal({ isOpen, onClose, onSuccess }: SignupModalProps) {
           {error && (
             <div className="text-sm font-medium text-destructive">{error}</div>
           )}
+          
+          {/* Login link */}
+          <div className="text-center text-sm">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                onLoginClick();
+              }}
+              className="text-primary hover:underline font-medium"
+            >
+              Log in
+            </button>
+          </div>
           
           <DialogFooter className="pt-4">
             <Button

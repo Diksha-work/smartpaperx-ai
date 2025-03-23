@@ -17,9 +17,10 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSignupClick?: () => void; // Optional prop to handle switching to signup modal
 }
 
-export function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export function LoginModal({ isOpen, onClose, onSignupClick }: LoginModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -103,6 +104,23 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               </button>
             </div>
           </div>
+          
+          {/* Sign up link - only show if onSignupClick is provided */}
+          {onSignupClick && (
+            <div className="text-center text-sm">
+              Don't have an account?{" "}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSignupClick();
+                }}
+                className="text-primary hover:underline font-medium"
+              >
+                Sign up
+              </button>
+            </div>
+          )}
           
           <DialogFooter className="pt-4">
             <Button

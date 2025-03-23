@@ -28,6 +28,17 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     }
   }, [currentUser, loading, location.pathname, setRedirectPath]);
 
+  // Handle modal switching
+  const handleSwitchToLogin = () => {
+    setShowSignupModal(false);
+    setShowLoginModal(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowLoginModal(false);
+    setShowSignupModal(true);
+  };
+
   // Handle signup flow
   const handleSignupClick = () => {
     setShowAuthAlert(false);
@@ -105,11 +116,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         isOpen={showSignupModal} 
         onClose={() => setShowSignupModal(false)} 
         onSuccess={handleSignupSuccess}
+        onLoginClick={handleSwitchToLogin}
       />
       
       <LoginModal 
         isOpen={showLoginModal} 
-        onClose={handleLoginClose} 
+        onClose={handleLoginClose}
+        onSignupClick={handleSwitchToSignup}
       />
 
       {/* Redirect to home while auth alert is shown */}
