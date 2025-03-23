@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { 
   getAuth, 
@@ -7,39 +6,21 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  updateProfile,
   User
 } from "firebase/auth";
-import { 
-  initializeApp, 
-  getApp 
-} from "firebase/app";
-import { 
-  getFirestore, 
-  doc, 
-  setDoc,
-  serverTimestamp 
-} from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useNavigate as useReactRouterNavigate, useLocation as useReactRouterLocation } from "react-router-dom";
-import { sendWelcomeEmail } from "@/utils/emailService";
 
 // Initialize Firebase
-let app;
-try {
-  app = getApp();
-} catch {
-  app = initializeApp(firebaseConfig);
-}
-
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 type AuthContextType = {
   currentUser: User | null;
   loading: boolean;
-  signup: (email: string, password: string, fullName?: string) => Promise<User>;
+  signup: (email: string, password: string) => Promise<User>;
   login: (email: string, password: string) => Promise<User>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -93,31 +74,11 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   };
 
   // Sign up function
-  const signup = async (email: string, password: string, fullName: string = "") => {
+  const signup = async (email: string, password: string) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      
-      // Store additional user data in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        email,
-        fullName,
-        createdAt: serverTimestamp(),
-        lastLogin: serverTimestamp()
-      });
-
-      // Update profile with display name if provided
-      if (fullName) {
-        await updateProfile(user, {
-          displayName: fullName
-        });
-      }
-
-      // Send welcome email
-      await sendWelcomeEmail(email, fullName);
-      
+      const result = await createUserWithEmailAndPassword(auth, email, password);
       toast.success("Account created successfully!");
-      return user;
+      return result.user;
     } catch (error: any) {
       let message = "Failed to create an account";
       if (error?.code === "auth/email-already-in-use") {
@@ -136,12 +97,6 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const login = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      
-      // Update last login timestamp
-      await setDoc(doc(db, "users", result.user.uid), {
-        lastLogin: serverTimestamp()
-      }, { merge: true });
-      
       toast.success("Logged in successfully!");
       return result.user;
     } catch (error: any) {
