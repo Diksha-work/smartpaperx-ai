@@ -1,20 +1,11 @@
+
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
-import { Copy, Loader2, Download, FileDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { generateWithLangChain } from "@/utils/langchainUtils";
+import { generatePDF } from "@/utils/pdfUtils";
+import { PromptInput } from "@/components/ai/PromptInput";
+import { AIResultDisplay } from "@/components/ai/AIResultDisplay";
+import { PDFExportDialog } from "@/components/ai/PDFExportDialog";
 
 interface AIFeatureProps {
   title: string;
@@ -30,8 +21,6 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
   const [showPdfDialog, setShowPdfDialog] = useState(false);
   const [pdfFilename, setPdfFilename] = useState("");
   const { toast } = useToast();
-  
-  const resultRef = React.useRef<HTMLDivElement>(null);
 
   const generateContent = async () => {
     if (!prompt.trim()) {
@@ -78,46 +67,10 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
   };
 
   const downloadAsPdf = async () => {
-    if (!resultRef.current) return;
-    
     try {
       const filename = pdfFilename.trim() || `${feature}_${new Date().toISOString().slice(0, 10)}`;
       
-      // Create a temporary div to properly render the markdown content
-      const contentDiv = document.createElement('div');
-      contentDiv.innerHTML = result.replace(/\n/g, '<br>');
-      contentDiv.style.padding = '20px';
-      contentDiv.style.color = 'black';
-      contentDiv.style.backgroundColor = 'white';
-      contentDiv.style.width = '595px'; // A4 width in pixels at 72 dpi
-      document.body.appendChild(contentDiv);
-      
-      // Capture the content as an image
-      const canvas = await html2canvas(contentDiv, {
-        scale: 2, // Higher resolution
-        backgroundColor: '#ffffff',
-      });
-      
-      document.body.removeChild(contentDiv);
-      
-      // Create PDF with A4 dimensions
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
-      });
-      
-      // Add title
-      pdf.setFontSize(16);
-      pdf.text(title, 20, 20);
-      pdf.setFontSize(12);
-      
-      // Add image of content
-      const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', 10, 30, 190, 0, '', 'FAST');
-      
-      // Download the PDF
-      pdf.save(`${filename}.pdf`);
+      await generatePDF(result, title, filename);
       
       setShowPdfDialog(false);
       
@@ -141,93 +94,29 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
       <p className="text-muted-foreground mb-6">{description}</p>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <Textarea
-            placeholder={placeholder}
-            className="min-h-[200px]"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
-          <Button 
-            onClick={generateContent} 
-            disabled={isLoading || !prompt.trim()}
-            className="w-full"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              "Generate"
-            )}
-          </Button>
-        </div>
+        <PromptInput
+          prompt={prompt}
+          onPromptChange={setPrompt}
+          placeholder={placeholder}
+          isLoading={isLoading}
+          onGenerate={generateContent}
+        />
         
-        <Card className="p-4 relative min-h-[200px] bg-muted/30">
-          {result ? (
-            <>
-              <div className="absolute right-2 top-2 flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={copyToClipboard}
-                  title="Copy to clipboard"
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={openPdfDialog}
-                  title="Download as PDF"
-                >
-                  <FileDown className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="whitespace-pre-wrap" ref={resultRef}>{result}</div>
-            </>
-          ) : (
-            <div className="text-center text-muted-foreground h-full flex items-center justify-center">
-              {isLoading ? (
-                <Loader2 className="h-8 w-8 animate-spin" />
-              ) : (
-                "AI-generated content will appear here"
-              )}
-            </div>
-          )}
-        </Card>
+        <AIResultDisplay
+          result={result}
+          isLoading={isLoading}
+          onCopy={copyToClipboard}
+          onExportPDF={openPdfDialog}
+        />
       </div>
       
-      <Dialog open={showPdfDialog} onOpenChange={setShowPdfDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Download as PDF</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <label htmlFor="filename" className="text-sm font-medium">
-                Enter a filename for your PDF:
-              </label>
-              <Input
-                id="filename"
-                value={pdfFilename}
-                onChange={(e) => setPdfFilename(e.target.value)}
-                placeholder="Enter filename (without .pdf)"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowPdfDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={downloadAsPdf}>
-              <Download className="mr-2 h-4 w-4" />
-              Download
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <PDFExportDialog
+        open={showPdfDialog}
+        onOpenChange={setShowPdfDialog}
+        filename={pdfFilename}
+        onFilenameChange={setPdfFilename}
+        onDownload={downloadAsPdf}
+      />
     </div>
   );
 }
