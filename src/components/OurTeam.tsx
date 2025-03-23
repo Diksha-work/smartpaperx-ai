@@ -1,4 +1,3 @@
-
 import React from "react";
 import { TeamMember } from "./TeamMember";
 
@@ -20,15 +19,6 @@ export const OurTeam = () => {
       email: "aaron@aptora.com"
     },
     {
-      name: "Sona Daison",
-      role: "Co-Founder & Frontend Developer",
-      bio: "Creates beautiful, intuitive interfaces that make learning engaging and accessible for all users.",
-      photoUrl: "/lovable-uploads/613b08bd-7241-4032-9279-c4ba25577fdc.png",
-      linkedin: "https://linkedin.com/in/sonadaison",
-      github: "https://github.com/sonadaison",
-      email: "sona@aptora.com"
-    },
-    {
       name: "Karivardhan",
       role: "Co-Founder & Tester",
       bio: "Ensures the highest quality user experience through rigorous testing methodologies and quality assurance practices.",
@@ -36,6 +26,15 @@ export const OurTeam = () => {
       linkedin: "https://linkedin.com/in/karivardhan",
       github: "https://github.com/karivardhan",
       email: "kari@aptora.com"
+    },
+    {
+      name: "Sona Daison",
+      role: "Co-Founder & Frontend Developer",
+      bio: "Creates beautiful, intuitive interfaces that make learning engaging and accessible for all users.",
+      photoUrl: sonaPhoto,
+      linkedin: "https://linkedin.com/in/sonadaison",
+      github: "https://github.com/sonadaison",
+      email: "sona@aptora.com"
     },
     {
       name: "Thrithwik",

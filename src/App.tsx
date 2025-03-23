@@ -16,12 +16,8 @@ import FAQ from "./pages/FAQ";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
 import { Layout } from "./components/Layout";
 import { useState } from "react";
-import { AuthProvider } from "./contexts/AuthContext";
 
 const App = () => {
   // Create QueryClient inside the component
@@ -30,31 +26,26 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Index />} />
-                <Route path="/content-generator" element={<ContentGenerator />} />
-                <Route path="/quiz-generator" element={<QuizGenerator />} />
-                <Route path="/learning-materials" element={<LearningMaterials />} />
-                <Route path="/notes-generator" element={<NotesGenerator />} />
-                <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
-                <Route path="/learning-assistant" element={<LearningAssistant />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/content-generator" element={<ContentGenerator />} />
+              <Route path="/quiz-generator" element={<QuizGenerator />} />
+              <Route path="/learning-materials" element={<LearningMaterials />} />
+              <Route path="/notes-generator" element={<NotesGenerator />} />
+              <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
+              <Route path="/learning-assistant" element={<LearningAssistant />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
