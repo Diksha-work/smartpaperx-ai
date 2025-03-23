@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Mail, Phone } from "lucide-react";
@@ -27,18 +26,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Close mobile menu when navigating
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -50,7 +48,7 @@ const Header = () => {
 
   const mainNavLinks = [
     { name: "Testimonials", path: "/#testimonials" },
-    { name: "FAQ", path: "/faq" }, // Changed from "/#faq" to "/faq" for dedicated page
+    { name: "FAQ", path: "/faq" },
     { name: "About Us", path: "/#about" },
   ];
 
@@ -63,11 +61,9 @@ const Header = () => {
     { name: "AI Learning Assistant", path: "/learning-assistant" },
   ];
 
-  // Handle smooth scrolling for section links
   const handleSectionClick = (e, sectionId) => {
     e.preventDefault();
     
-    // If we're not on the homepage, navigate there first
     if (location.pathname !== '/') {
       window.location.href = `/#${sectionId}`;
       return;
@@ -77,10 +73,9 @@ const Header = () => {
     if (section) {
       const offsetTop = section.offsetTop;
       window.scrollTo({
-        top: offsetTop - 80, // Offset for header
+        top: offsetTop - 80,
         behavior: 'smooth'
       });
-      // Close mobile menu after clicking
       setIsOpen(false);
     }
   };
@@ -99,9 +94,7 @@ const Header = () => {
           <span className="font-bold text-xl">Aptora</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {/* Home Link */}
+        <nav className="hidden md:flex items-center space-x-6">
           <Link 
             to="/" 
             className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground"
@@ -109,7 +102,6 @@ const Header = () => {
             Home
           </Link>
           
-          {/* Features Dropdown - Desktop - VERTICAL LAYOUT */}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -133,9 +125,7 @@ const Header = () => {
             </NavigationMenuList>
           </NavigationMenu>
           
-          {/* Section navigation links */}
           {mainNavLinks.map((link) => {
-            // Only apply smooth scrolling for links with hash
             if (link.path.includes('#')) {
               const sectionId = link.path.split('#')[1];
               return (
@@ -149,7 +139,6 @@ const Header = () => {
                 </a>
               );
             } else {
-              // Use regular Link for non-section links (like FAQ)
               return (
                 <Link
                   key={link.name}
@@ -162,7 +151,6 @@ const Header = () => {
             }
           })}
 
-          {/* Contact Link with Popover */}
           <TooltipProvider>
             <Popover>
               <PopoverTrigger className="nav-link font-medium text-sm text-foreground/80 hover:text-foreground">
@@ -190,19 +178,22 @@ const Header = () => {
               </PopoverContent>
             </Popover>
           </TooltipProvider>
+          
+          <ThemeToggle />
         </nav>
 
-        {/* Mobile Navigation Toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground"
-          aria-label={isOpen ? "Close Menu" : "Open Menu"}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-md text-foreground/80 hover:text-foreground"
+            aria-label={isOpen ? "Close Menu" : "Open Menu"}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
       <div
         className={cn(
           "md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 shadow-md transition-all duration-300 ease-in-out overflow-hidden z-50",
@@ -217,7 +208,6 @@ const Header = () => {
             Home
           </Link>
           
-          {/* Features Dropdown - Mobile - VERTICAL LAYOUT */}
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center justify-between py-2 text-foreground/80 hover:text-foreground bg-transparent border-none w-full text-left">
               Features <ChevronDown className="h-4 w-4 ml-1" />
@@ -236,9 +226,7 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* Section links - Mobile */}
           {mainNavLinks.map((link) => {
-            // Only apply smooth scrolling for links with hash
             if (link.path.includes('#')) {
               const sectionId = link.path.split('#')[1];
               return (
@@ -252,7 +240,6 @@ const Header = () => {
                 </a>
               );
             } else {
-              // Use regular Link for non-section links (like FAQ)
               return (
                 <Link
                   key={link.name}
@@ -265,7 +252,6 @@ const Header = () => {
             }
           })}
           
-          {/* Contact Information Display - Mobile */}
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center justify-between py-2 text-foreground/80 hover:text-foreground bg-transparent border-none w-full text-left">
               Contact <ChevronDown className="h-4 w-4 ml-1" />
