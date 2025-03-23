@@ -1,69 +1,163 @@
-# Welcome to your Lovable project
+# Aptora - AI-Powered E-Learning Platform
+---
 
-## Project info
+## 📘 Project Overview
 
-**URL**: https://lovable.dev/projects/197290d5-4328-4190-ab41-1784fa92920c
+Aptora is an innovative, AI-powered e-learning platform designed to transform the educational experience by leveraging artificial intelligence to generate personalized learning content. The platform offers a range of features including content generation, quiz creation, study notes, flashcards, and an AI learning assistant to support students in their educational journey.
 
-## How can I edit this code?
+The core mission of Aptora is to make education more adaptive to individual learning styles and needs. Through intelligent content generation, the platform helps students and educators create customized educational materials that align with specific learning objectives.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🧠 Technologies Used
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/197290d5-4328-4190-ab41-1784fa92920c) and start prompting.
+### Frontend
+- **React** – JavaScript library for building UI
+- **TypeScript** – Static typing for enhanced code quality
+- **React Router** – Page routing/navigation
+- **Tailwind CSS** – Utility-first CSS framework
+- **shadcn/ui** – Component library based on Radix UI
+- **Lucide React** – Clean and modern icon library
 
-Changes made via Lovable will be committed automatically to this repo.
+### AI Integration
+- **Google Gemini API** – Powers the AI features
+- **Gemini 1.5 Pro** – Language model for generating learning content
 
-**Use your preferred IDE**
+### Document Generation
+- **jsPDF** – PDF generation
+- **html2canvas** – Capture HTML content for PDF
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### State Management
+- **React Query** – For efficient data fetching and caching
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Build Tools
+- **Vite** – Frontend build tool
+- **SWC** – Fast JavaScript/TypeScript compiler
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## ✨ Key Features
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 1. Content Generator
+Generates structured educational content from a topic or prompt.
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 2. Quiz Generator
+Builds custom quizzes with multiple question types based on learning goals.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 3. E-learning Materials
+Creates guided learning roadmaps and subject breakdowns.
+
+### 4. AI Notes Generator
+Summarizes complex content into clear, concise notes.
+
+### 5. Flashcard Generator
+Creates flashcards in Q&A format for easy review.
+
+### 6. AI Learning Assistant
+An interactive assistant to answer study-related questions.
+
+### 7. PDF Export
+Export all generated content in clean, downloadable PDFs.
+
+---
+
+## 🤖 How AI Integration Works
+
+1. User submits a prompt/request
+2. Request sent to Gemini API with a system prompt
+3. Gemini generates content specific to the feature
+4. Output is rendered and available for PDF download
+
+Each tool uses a custom system prompt to tailor the format and style for educational use.
+
+---
+
+## 📁 Folder Structure
+```
+aptora/
+├── public/                  # Static files
+├── src/                     # Source code
+│   ├── assets/              # Static assets/images
+│   ├── components/          # Reusable UI components
+│   │   ├── ui/              # shadcn/ui components
+│   │   └── ...              # Custom components
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Utility functions
+│   ├── pages/               # Feature and static pages
+│   │   ├── ContentGenerator.tsx
+│   │   ├── QuizGenerator.tsx
+│   │   ├── NotesGenerator.tsx
+│   │   ├── FlashcardGenerator.tsx
+│   │   ├── LearningAssistant.tsx
+│   │   ├── LearningMaterials.tsx
+│   │   └── ...
+│   ├── App.tsx              # Root component
+│   └── main.tsx             # Entry point
+├── index.html               # HTML template
+├── vite.config.ts           # Vite config
+├── tailwind.config.ts       # Tailwind config
+└── tsconfig.json            # TypeScript config
+```
+
+---
+
+## 🔐 Environment Variables
+Create a `.env` file in the root of the project:
+```
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+Obtain your Gemini API key from [Google AI Studio](https://makersuite.google.com/).
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Steps
+```bash
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 👨‍💻 Team Members
+- Aaron Sonnie – Founder & Lead Developer
+- Sona Daison – Co-Founder & Frontend Developer
+- Karivardhan – Co-Founder & Tester
+- Thrithwik – Co-Founder & Backend Developer
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📬 Contact
+- 🌐 Website: [aptora.com](https://aptora.com)
+- 📧 Email: contact@aptora.com
+- 🐦 Twitter: [@aptora_ai](https://twitter.com/aptora_ai)
+- 🔗 LinkedIn: [Aptora](https://linkedin.com/company/aptora)
 
-## What technologies are used for this project?
+---
 
-This project is built with .
+## 📄 License
+This project is licensed under the **MIT License** – see the `LICENSE` file for details.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 🙏 Acknowledgments
+- Google Gemini API for AI capabilities
+- shadcn/ui for the component library
+- Tailwind CSS for fast and responsive styling
+- React & TypeScript communities for extensive docs
+- All contributors who made this project possible
 
-Simply open [Lovable](https://lovable.dev/projects/197290d5-4328-4190-ab41-1784fa92920c) and click on Share -> Publish.
+---
 
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+> © 2025 Aptora. All rights reserved.
