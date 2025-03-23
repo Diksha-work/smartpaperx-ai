@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { 
   getAuth, 
@@ -6,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   User
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -23,6 +23,7 @@ type AuthContextType = {
   signup: (email: string, password: string) => Promise<User>;
   login: (email: string, password: string) => Promise<User>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   redirectAfterLogin: () => void;
   setRedirectPath: (path: string) => void;
 };
@@ -44,6 +45,20 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
+  const [showLoginAfterReset, setShowLoginAfterReset] = useState(false);
+
+  // Check if the URL contains the Firebase action=resetPassword parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    
+    if (mode === 'resetPassword') {
+      // Remove the query parameters to clean up the URL
+      // We'll handle opening the login modal once the reset is complete
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setShowLoginAfterReset(true);
+    }
+  }, []);
 
   // Redirect function
   const redirectAfterLogin = () => {
@@ -96,6 +111,23 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
     }
   };
 
+  // Reset password function
+  const resetPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return;
+    } catch (error: any) {
+      let message = "Failed to reset password";
+      if (error?.code === "auth/user-not-found") {
+        message = "No account found with this email address";
+      } else if (error?.code === "auth/invalid-email") {
+        message = "Invalid email address";
+      }
+      toast.error(message);
+      throw error;
+    }
+  };
+
   // Sign out function
   const signOut = async () => {
     try {
@@ -123,6 +155,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
     signup,
     login,
     signOut,
+    resetPassword,
     redirectAfterLogin,
     setRedirectPath: (path: string) => setRedirectPath(path)
   };

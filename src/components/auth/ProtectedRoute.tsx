@@ -15,6 +15,19 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
+  // Check for reset password return
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    
+    if (mode === 'resetPassword') {
+      // Show login modal after password reset
+      setShowLoginModal(true);
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   useEffect(() => {
     // If not loading and no user, show signup modal and set redirect path
     if (!loading && !currentUser) {
