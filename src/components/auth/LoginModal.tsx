@@ -76,7 +76,7 @@ export function LoginModal({ isOpen, onClose, onSignupClick }: LoginModalProps) 
       <Dialog open={isOpen && !showResetPasswordModal} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Login to your account</DialogTitle>
+            <DialogTitle>Login to AptoraX AI</DialogTitle>
             <DialogDescription>
               Enter your email and password to login.
             </DialogDescription>

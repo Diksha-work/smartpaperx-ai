@@ -76,7 +76,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
-          {/* Empty space where branding was removed */}
+          {/* AptoraX AI branding can be added here if needed */}
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -166,7 +166,7 @@ export function AppSidebar() {
             </Link>
           </div>
           <div className="mt-4 text-muted-foreground">
-            © {new Date().getFullYear()} Aptora. All rights reserved.
+            © {new Date().getFullYear()} AptoraX AI. All rights reserved.
           </div>
         </div>
       </SidebarFooter>
