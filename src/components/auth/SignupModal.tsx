@@ -72,7 +72,7 @@ export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: Signup
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Sign Up to AptoraX AI</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Sign Up</DialogTitle>
           <DialogDescription>
             Create an account to access all features
           </DialogDescription>

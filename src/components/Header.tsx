@@ -95,7 +95,7 @@ const Header = () => {
       >
         <div className="container mx-auto px-4 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <span className="font-bold text-xl">AptoraX AI</span>
+            <span className="font-bold text-xl">Aptora</span>
           </Link>
 
           <DesktopNavigation 

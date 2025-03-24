@@ -1,12 +1,11 @@
-
-# AptoraX AI - AI-Powered E-Learning Platform
+# Aptora - AI-Powered E-Learning Platform
 ---
 
 ## 📘 Project Overview
 
-AptoraX AI is an innovative, AI-powered e-learning platform designed to transform the educational experience by leveraging artificial intelligence to generate personalized learning content. The platform offers a range of features including content generation, quiz creation, study notes, flashcards, and an AI learning assistant to support students in their educational journey.
+Aptora is an innovative, AI-powered e-learning platform designed to transform the educational experience by leveraging artificial intelligence to generate personalized learning content. The platform offers a range of features including content generation, quiz creation, study notes, flashcards, and an AI learning assistant to support students in their educational journey.
 
-The core mission of AptoraX AI is to make education more adaptive to individual learning styles and needs. Through intelligent content generation, the platform helps students and educators create customized educational materials that align with specific learning objectives.
+The core mission of Aptora is to make education more adaptive to individual learning styles and needs. Through intelligent content generation, the platform helps students and educators create customized educational materials that align with specific learning objectives.
 
 ---
 
@@ -75,7 +74,7 @@ Each tool uses a custom system prompt to tailor the format and style for educati
 
 ## 📁 Folder Structure
 ```
-aptorax-ai/
+aptora/
 ├── public/                  # Static files
 ├── src/                     # Source code
 │   ├── assets/              # Static assets/images
@@ -140,10 +139,10 @@ npm run dev
 ---
 
 ## 📬 Contact
-- 🌐 Website: [aptorax-ai.com](https://aptorax-ai.com)
-- 📧 Email: contact@aptorax-ai.com
-- 🐦 Twitter: [@aptorax_ai](https://twitter.com/aptorax_ai)
-- 🔗 LinkedIn: [AptoraX AI](https://linkedin.com/company/aptorax-ai)
+- 🌐 Website: [aptora.com](https://aptora.com)
+- 📧 Email: contact@aptora.com
+- 🐦 Twitter: [@aptora_ai](https://twitter.com/aptora_ai)
+- 🔗 LinkedIn: [Aptora](https://linkedin.com/company/aptora)
 
 ---
 
@@ -161,4 +160,4 @@ This project is licensed under the **MIT License** – see the `LICENSE` file fo
 
 ---
 
-> © 2025 AptoraX AI. All rights reserved.
+> © 2025 Aptora. All rights reserved.
