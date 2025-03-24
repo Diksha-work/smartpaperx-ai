@@ -71,7 +71,7 @@ export function ResetPasswordModal({ isOpen, onClose, onLoginClick }: ResetPassw
         <DialogHeader>
           <DialogTitle>Reset Your Password</DialogTitle>
           <DialogDescription>
-            Enter your email address and we'll send you a link to reset your password.
+            Enter your email address and we'll send you a link to reset your AptoraX AI password.
           </DialogDescription>
         </DialogHeader>
         

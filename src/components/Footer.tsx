@@ -34,9 +34,9 @@ const Footer = () => {
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-lg font-semibold mb-4">About Aptora</h3>
+            <h3 className="text-lg font-semibold mb-4">About AptoraX AI</h3>
             <p className="text-sm text-primary-foreground/80 mb-4">
-              Aptora is revolutionizing e-learning with AI technology that adapts to each learner's needs, 
+              AptoraX AI is revolutionizing e-learning with AI technology that adapts to each learner's needs, 
               making education more accessible, personalized, and effective for everyone.
             </p>
             <div className="flex space-x-4">
@@ -140,7 +140,7 @@ const Footer = () => {
         
         <div className="border-t border-primary-foreground/10 pt-8">
           <p className="text-sm text-center text-primary-foreground/60">
-            &copy; {new Date().getFullYear()} Aptora. All rights reserved.
+            &copy; {new Date().getFullYear()} AptoraX AI. All rights reserved.
           </p>
         </div>
       </div>
