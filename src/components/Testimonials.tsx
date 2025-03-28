@@ -31,19 +31,19 @@ const Testimonials = () => {
       name: "Sarah Johnson",
       role: "Medical Student",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=256",
-      review: "Aptora transformed my study routine. The AI-generated notes helped me grasp complex medical concepts that I struggled with for months. My exam scores improved significantly!"
+      review: "SmartQPX AI transformed my study routine. The AI-generated question papers helped me practice complex medical concepts that I struggled with for months. My exam scores improved significantly!"
     },
     {
       name: "David Chen",
       role: "Computer Science Tutor",
       image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=256",
-      review: "As an educator, I've found Aptora's quiz generator to be a game-changer. It creates challenging questions that truly test understanding rather than just memorization."
+      review: "As an educator, I've found SmartQPX AI’s question paper generator to be a game-changer. It creates well-structured question papers with customizable difficulty levels, ensuring a balanced and challenging assessment for students."
     },
     {
       name: "Amara Patel",
       role: "Business Professional",
       image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=256",
-      review: "The flashcard feature helped me prepare for my certification exam in half the time. The AI seems to understand which concepts I need to review more often."
+      review: "The dynamic question paper generation feature helped me prepare for my certification exam efficiently. The AI ensures a mix of easy, medium, and difficult questions, helping me focus on areas that need improvement."
     }
   ];
 
@@ -55,7 +55,7 @@ const Testimonials = () => {
             What Our Users Say
           </h2>
           <p className="text-xl text-muted-foreground max-w-[700px] mx-auto">
-            Real experiences from students, educators, and professionals who've transformed their learning with Aptora.
+            Real experiences from students, educators, and professionals who've transformed their learning with SmartQPX AI.
           </p>
         </div>
 
