@@ -33,8 +33,8 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
       path: "/content-generator",
     },
     {
-      name: "Quiz Generator",
-      description: "Craft personalized quizzes",
+      name: "Question Paper Generator",
+      description: "Craft personalized question papers",
       icon: <FlaskConical className="h-4 w-4 mr-2" />,
       path: "/quiz-generator",
     },

@@ -7,9 +7,9 @@ const QuizGenerator = () => {
   return (
     <ProtectedRoute>
       <AIFeature
-        title="Quiz Generator"
-        description="Create customized quizzes with varying difficulty levels to test your knowledge."
-        placeholder="Describe the quiz you need (e.g., '10 multiple choice questions about World War II for high school students')"
+        title="Question Paper Generator"
+        description="Create customized question papers with varying difficulty levels to test your knowledge."
+        placeholder="Describe the question paper you need (e.g., '10 questions about World War II with 30% easy, 40% medium, and 30% difficult questions for high school students')"
         feature="quiz"
       />
     </ProtectedRoute>

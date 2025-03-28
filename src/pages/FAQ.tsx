@@ -36,22 +36,22 @@ const faqData: FAQItem[] = [
     notes: "The more detailed your request, the more tailored the content will be to your needs."
   },
   {
-    feature: "Quiz Generator",
+    feature: "Question Paper Generator",
     icon: ClipboardCheck,
-    description: "Create customized quizzes with varying difficulty levels to test your knowledge.",
+    description: "Create customized question papers with varying difficulty levels to test your knowledge.",
     instructions: [
-      "Specify the subject and topic for your quiz",
-      "Choose the number of questions and difficulty level",
+      "Specify the subject and topic for your question paper",
+      "Choose the number of questions and difficulty level distribution (percentage of easy, medium, difficult)",
       "Select question types (multiple choice, true/false, short answer, etc.)",
-      "Click 'Generate Quiz' to create your custom assessment",
-      "Use the 'Download as PDF' option to save your quiz"
+      "Click 'Generate Question Paper' to create your custom assessment",
+      "Use the 'Download as PDF' option to save your question paper"
     ],
     tips: [
       "Include the target audience (e.g., 'middle school students', 'college freshmen')",
       "Specify if you want answers included in the output",
-      "Mix question types for more comprehensive assessment"
+      "Define the exact percentage of easy, medium, and difficult questions"
     ],
-    notes: "For timed quizzes, mention the suggested time limit in your request."
+    notes: "For timed assessments, mention the suggested time limit in your request."
   },
   {
     feature: "E-learning Materials",
@@ -131,7 +131,7 @@ const FAQ = () => {
   return (
     <div className="container px-4 py-12 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold tracking-tight mb-2">Frequently Asked Questions</h1>
-      <p className="text-muted-foreground mb-8">Learn how to use Aptora's AI-powered learning tools</p>
+      <p className="text-muted-foreground mb-8">Learn how to use SmartQPX AI's learning tools</p>
       
       <Accordion type="single" collapsible className="w-full space-y-4">
         {faqData.map((item, index) => (

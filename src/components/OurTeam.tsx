@@ -1,49 +1,35 @@
+
 import React from "react";
 import { TeamMember } from "./TeamMember";
-
-// Import team member photos
-import aaronPhoto from "../assets/aaron.jpg";
-import kariPhoto from "../assets/kari.jpg";
-import sonaPhoto from "../assets/sona.jpg";
-import thrithwikPhoto from "../assets/thrithwik.jpg";
 
 export const OurTeam = () => {
   const teamMembers = [
     {
-      name: "Aaron Sonnie",
+      name: "Diksha Annamalai",
       role: "Founder & Lead Developer",
-      bio: "Passionate about creating innovative educational solutions. Leads the technical development and strategic direction of Aptora.",
-      photoUrl: "/lovable-uploads/7ac96ef4-2820-482a-ae2e-a05176205147.png",
-      linkedin: "https://linkedin.com/in/aaronsonnie",
-      github: "https://github.com/aaronsonnie",
-      email: "aaron@aptora.com"
+      bio: "Passionate about creating innovative educational solutions. Leads the technical development and strategic direction of SmartQPX AI.",
+      photoUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+      linkedin: "https://linkedin.com/in/diksha-annamalai",
+      github: "https://github.com/diksha-annamalai",
+      email: "diksha@smartqpx.com"
     },
     {
-      name: "Karivardhan",
-      role: "Co-Founder & Tester",
-      bio: "Ensures the highest quality user experience through rigorous testing methodologies and quality assurance practices.",
-      photoUrl: kariPhoto,
-      linkedin: "https://linkedin.com/in/karivardhan",
-      github: "https://github.com/karivardhan",
-      email: "kari@aptora.com"
-    },
-    {
-      name: "Sona Daison",
+      name: "Namratha B",
       role: "Co-Founder & Frontend Developer",
-      bio: "Creates beautiful, intuitive interfaces that make learning engaging and accessible for all users.",
-      photoUrl: sonaPhoto,
-      linkedin: "https://linkedin.com/in/sonadaison",
-      github: "https://github.com/sonadaison",
-      email: "sona@aptora.com"
+      bio: "Creates beautiful, intuitive interfaces that make question paper generation accessible and engaging for all users.",
+      photoUrl: "https://images.unsplash.com/photo-1598550880863-4e8aa3d0edb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+      linkedin: "https://linkedin.com/in/namratha-b",
+      github: "https://github.com/namratha-b",
+      email: "namratha@smartqpx.com"
     },
     {
-      name: "Thrithwik",
+      name: "Pranav C",
       role: "Co-Founder & Backend Developer",
-      bio: "Develops the robust infrastructure that powers Aptora's AI learning capabilities and data processing.",
-      photoUrl: thrithwikPhoto,
-      linkedin: "https://linkedin.com/in/thrithwik",
-      github: "https://github.com/thrithwik",
-      email: "thrithwik@aptora.com"
+      bio: "Develops the robust infrastructure that powers SmartQPX AI's question paper generation capabilities and data processing.",
+      photoUrl: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+      linkedin: "https://linkedin.com/in/pranav-c",
+      github: "https://github.com/pranav-c",
+      email: "pranav@smartqpx.com"
     }
   ];
 
@@ -55,11 +41,11 @@ export const OurTeam = () => {
             Our Team
           </h2>
           <p className="text-xl text-muted-foreground max-w-[700px] mx-auto">
-            Meet the talented individuals behind Aptora's mission to transform education with AI.
+            Meet the talented individuals behind SmartQPX AI's mission to transform education with AI.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {teamMembers.map((member) => (
             <TeamMember key={member.name} {...member} />
           ))}

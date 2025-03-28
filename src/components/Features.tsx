@@ -42,8 +42,8 @@ const Features = () => {
       path: "/content-generator"
     },
     {
-      title: "Quiz Generator",
-      description: "Create customized quizzes with varying difficulty levels to test your knowledge.",
+      title: "Question Paper Generator",
+      description: "Create customized question papers with varying difficulty levels to test your knowledge.",
       icon: ClipboardCheck,
       path: "/quiz-generator"
     },

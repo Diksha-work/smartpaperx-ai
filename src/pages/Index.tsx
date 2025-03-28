@@ -65,7 +65,7 @@ const Index = () => {
 
   // Update document title
   useEffect(() => {
-    document.title = "AptoraX AI | AI-Powered E-learning Platform";
+    document.title = "SmartQPX AI | AI-Powered Question Paper Generation Platform";
   }, []);
 
   // Add smooth scrolling for anchor links
@@ -103,10 +103,10 @@ const Index = () => {
           <div className="container px-4 md:px-6">
             <div className="text-center mb-12 opacity-0">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                About AptoraX AI
+                About SmartQPX AI
               </h2>
               <p className="text-xl text-muted-foreground max-w-[700px] mx-auto">
-                Transforming how you learn with AI technology tailored to your unique needs.
+                Transforming how you create and practice with question papers using AI technology.
               </p>
             </div>
             
@@ -114,7 +114,7 @@ const Index = () => {
               <div className="aspect-video rounded-xl overflow-hidden relative shadow-md">
                 <img 
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80" 
-                  alt="Student using AptoraX AI" 
+                  alt="Student using SmartQPX AI" 
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -124,15 +124,17 @@ const Index = () => {
               <div className="space-y-6">
                 <h3 className="text-2xl font-bold">Our Mission</h3>
                 <p className="text-muted-foreground">
-                  At AptoraX AI, we believe that education should adapt to the learner, not the other way around. 
-                  Our AI-powered platform analyzes your learning style, strengths, and areas for improvement to 
-                  create a completely personalized learning experience.
+                  At SmartQPX AI, we believe in making question paper generation accessible and efficient for everyone. 
+                  Our AI-powered platform allows users to enter a subject to instantly generate customized question papers 
+                  with defined difficulty level distributions, helping students practice effectively and enabling teachers 
+                  to create assessment materials effortlessly.
                 </p>
                 <h3 className="text-2xl font-bold">How It Works</h3>
                 <p className="text-muted-foreground">
-                  Our platform uses advanced machine learning algorithms to understand how you learn best. 
-                  As you interact with AptoraX AI, it continuously adapts to provide you with the most effective 
-                  learning materials, quizzes, and resources that match your unique learning profile.
+                  Our platform uses advanced machine learning algorithms to understand subject matter requirements. 
+                  Simply specify your subject, set the percentage of easy, medium, and difficult questions you want, 
+                  and SmartQPX AI instantly generates a tailored question paper that matches your exact specifications. 
+                  Students can use it for practice, while teachers save countless hours on assessment creation.
                 </p>
               </div>
             </div>

@@ -47,15 +47,15 @@ const Hero = () => {
 
       <div className="container px-4 md:px-6 flex flex-col items-center text-center relative z-10 animate-fade-in">
         <div className="inline-block rounded-full px-4 py-1.5 text-sm font-medium bg-primary/5 mb-6 animate-scale-in animate-stagger-1">
-          Revolutionizing E-Learning with AI
+          Revolutionizing Question Paper Generation with AI
         </div>
         
         <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter mb-4 animate-scale-in animate-stagger-2">
-          Meet Aptora
+          Meet SmartQPX
         </h1>
         
         <p className="max-w-[700px] text-lg md:text-xl text-muted-foreground mb-8 animate-scale-in animate-stagger-3">
-          A smart, AI-powered e-learning platform that generates personalized question papers, study materials, flashcards, learning paths, and notes tailored to your learning style.
+          A smart, AI-powered platform that generates personalized question papers, study materials, flashcards, learning paths, and notes tailored to your learning style.
         </p>
         
         <div className="animate-scale-in animate-stagger-4">

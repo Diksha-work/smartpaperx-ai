@@ -34,9 +34,9 @@ const Footer = () => {
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-lg font-semibold mb-4">About AptoraX AI</h3>
+            <h3 className="text-lg font-semibold mb-4">About SmartQPX AI</h3>
             <p className="text-sm text-primary-foreground/80 mb-4">
-              AptoraX AI is revolutionizing e-learning with AI technology that adapts to each learner's needs, 
+              SmartQPX AI is revolutionizing question paper generation with AI technology that adapts to specific requirements, 
               making education more accessible, personalized, and effective for everyone.
             </p>
             <div className="flex space-x-4">
@@ -128,7 +128,7 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start space-x-2">
                 <Mail className="h-5 w-5 text-primary-foreground/60 mt-0.5" />
-                <span>aaronsonnie@gmail.com</span>
+                <span>info@smartqpx.com</span>
               </li>
               <li className="flex items-start space-x-2">
                 <Phone className="h-5 w-5 text-primary-foreground/60 mt-0.5" />
@@ -140,7 +140,7 @@ const Footer = () => {
         
         <div className="border-t border-primary-foreground/10 pt-8">
           <p className="text-sm text-center text-primary-foreground/60">
-            &copy; {new Date().getFullYear()} AptoraX AI. All rights reserved.
+            &copy; {new Date().getFullYear()} SmartQPX AI. All rights reserved.
           </p>
         </div>
       </div>
