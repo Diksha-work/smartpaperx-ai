@@ -98,7 +98,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const login = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Welcome back to SmartQPX AI!");
+      toast.success("Welcome back to SmartQPX AI! You have successfully logged in.");
       return result.user;
     } catch (error: any) {
       let message = "Failed to log in";
