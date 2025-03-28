@@ -21,8 +21,8 @@ export const ContactPopover: React.FC = () => {
           <h3 className="text-sm font-medium mb-2">Contact Information</h3>
           <div className="flex items-center gap-2 text-sm">
             <Mail className="h-4 w-4 text-primary" />
-            <a href="mailto:aaronsonnie@gmail.com" className="text-foreground/80 hover:text-foreground">
-              aaronsonnie@gmail.com
+            <a href="mailto:diksha.annamalai@gmail.com" className="text-foreground/80 hover:text-foreground">
+              diksha.annamalai@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-2 text-sm">

@@ -132,16 +132,15 @@ npm run dev
 ---
 
 ## 👨‍💻 Team Members
-- Aaron Sonnie – Founder & Lead Developer
-- Sona Daison – Co-Founder & Frontend Developer
-- Karivardhan – Co-Founder & Tester
-- Thrithwik – Co-Founder & Backend Developer
+- Diksha Annamalai – Founder & Lead Developer
+- Namratha B – Co-Founder & Frontend Developer
+- Pranav C – Co-Founder & Backend Developer
 
 ---
 
 ## 📬 Contact
 - 🌐 Website: [aptorax.ai](https://aptorax.ai)
-- 📧 Email: contact@aptorax.ai
+- 📧 Email: diksha.annamalai@gmail.com
 - 🐦 Twitter: [@aptorax_ai](https://twitter.com/aptorax_ai)
 - 🔗 LinkedIn: [AptoraX AI](https://linkedin.com/company/aptorax-ai)
 

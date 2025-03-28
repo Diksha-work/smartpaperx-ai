@@ -7,12 +7,14 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
+  updateProfile,
   User
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useNavigate as useReactRouterNavigate, useLocation as useReactRouterLocation } from "react-router-dom";
+import { sendWelcomeEmail } from "@/utils/emailUtils";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -21,7 +23,7 @@ const auth = getAuth(app);
 type AuthContextType = {
   currentUser: User | null;
   loading: boolean;
-  signup: (email: string, password: string) => Promise<User>;
+  signup: (email: string, password: string, fullName?: string) => Promise<User>;
   login: (email: string, password: string) => Promise<User>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -75,10 +77,21 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   };
 
   // Sign up function
-  const signup = async (email: string, password: string) => {
+  const signup = async (email: string, password: string, fullName?: string) => {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
-      toast.success("Welcome to SmartQPX AI! Your account has been created successfully!");
+      
+      // Update the user profile with their display name if provided
+      if (fullName && result.user) {
+        await updateProfile(result.user, { displayName: fullName });
+      }
+      
+      // Send welcome email
+      if (fullName && email) {
+        await sendWelcomeEmail(email, fullName);
+      }
+      
+      toast.success("Welcome to AptoraX AI! Your account has been created successfully!");
       return result.user;
     } catch (error: any) {
       let message = "Failed to create an account";
@@ -98,7 +111,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const login = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Welcome back to SmartQPX AI! You have successfully logged in.");
+      toast.success("Welcome back to AptoraX AI! You have successfully logged in.");
       return result.user;
     } catch (error: any) {
       let message = "Failed to log in";
@@ -133,7 +146,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
-      toast.success("You've been logged out of SmartQPX AI");
+      toast.success("You've been logged out of AptoraX AI");
     } catch (error) {
       toast.error("Failed to log out");
       throw error;

@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 
 interface SignupModalProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ interface SignupModalProps {
 }
 
 export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: SignupModalProps) {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,6 +36,12 @@ export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: Signup
     
     // Reset error
     setError("");
+    
+    // Validate inputs
+    if (!fullName.trim()) {
+      setError("Please enter your full name");
+      return;
+    }
     
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -51,7 +58,8 @@ export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: Signup
     setLoading(true);
     
     try {
-      await signup(email, password);
+      await signup(email, password, fullName);
+      setFullName("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
@@ -74,11 +82,27 @@ export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: Signup
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Sign Up</DialogTitle>
           <DialogDescription>
-            Create an account to access all SmartQPX AI features
+            Create an account to access all AptoraX AI features
           </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="fullName">Full Name</Label>
+            <div className="relative">
+              <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="fullName"
+                type="text"
+                placeholder="John Doe"
+                className="pl-10"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
