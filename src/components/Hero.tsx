@@ -55,8 +55,7 @@ const Hero = () => {
         </h1>
         
         <p className="max-w-[700px] text-lg md:text-xl text-muted-foreground mb-8 animate-scale-in animate-stagger-3">
-          A smart, AI-powered e-learning platform that generates personalized study materials, 
-          quizzes, flashcards, learning paths, and notes tailored to your learning style.
+          A smart, AI-powered e-learning platform that generates personalized question papers, study materials, flashcards, learning paths, and notes tailored to your learning style.
         </p>
         
         <div className="animate-scale-in animate-stagger-4">
