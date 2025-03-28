@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { 
   getAuth, 
@@ -77,7 +78,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const signup = async (email: string, password: string) => {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
-      toast.success("Account created successfully!");
+      toast.success("Welcome to SmartQPX AI! Your account has been created successfully!");
       return result.user;
     } catch (error: any) {
       let message = "Failed to create an account";
@@ -97,7 +98,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const login = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Logged in successfully!");
+      toast.success("Welcome back to SmartQPX AI!");
       return result.user;
     } catch (error: any) {
       let message = "Failed to log in";
@@ -132,7 +133,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
-      toast.success("Logged out successfully");
+      toast.success("You've been logged out of SmartQPX AI");
     } catch (error) {
       toast.error("Failed to log out");
       throw error;

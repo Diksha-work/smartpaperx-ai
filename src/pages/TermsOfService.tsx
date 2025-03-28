@@ -13,11 +13,11 @@ const TermsOfService = () => {
         <div className="p-6 bg-card rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Agreement to Terms</h2>
           <p className="mb-4">
-            These Terms of Service constitute a legally binding agreement made between you and Aptora, 
+            These Terms of Service constitute a legally binding agreement made between you and SmartQPX AI, 
             concerning your access to and use of our e-learning platform.
           </p>
           <p>
-            By accessing or using Aptora, you agree to be bound by these Terms. If you disagree with any 
+            By accessing or using SmartQPX AI, you agree to be bound by these Terms. If you disagree with any 
             part of the terms, you may not access the platform.
           </p>
         </div>
@@ -30,7 +30,7 @@ const TermsOfService = () => {
             </CollapsibleTrigger>
             <CollapsibleContent className="p-4 pt-0 text-sm">
               <div className="pt-4 space-y-2">
-                <p className="font-medium">As a user of Aptora, you have the right to:</p>
+                <p className="font-medium">As a user of SmartQPX AI, you have the right to:</p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>Access and use the e-learning tools provided on the platform</li>
                   <li>Generate content for educational purposes</li>
@@ -56,7 +56,7 @@ const TermsOfService = () => {
             <CollapsibleContent className="p-4 pt-0 text-sm">
               <div className="pt-4 space-y-2">
                 <p>
-                  The Aptora platform, its original content, features, and functionality are owned by Aptora 
+                  The SmartQPX AI platform, its original content, features, and functionality are owned by SmartQPX AI 
                   and are protected by international copyright, trademark, and other intellectual property laws.
                 </p>
                 
@@ -66,7 +66,7 @@ const TermsOfService = () => {
                 
                 <ul className="list-disc pl-5 space-y-1 mt-2">
                   <li>Users retain rights to content they create using the platform</li>
-                  <li>Aptora may use anonymized data from user content to improve the platform</li>
+                  <li>SmartQPX AI may use anonymized data from user content to improve the platform</li>
                   <li>Users are responsible for ensuring they have rights to all content input into the system</li>
                 </ul>
               </div>
@@ -81,13 +81,13 @@ const TermsOfService = () => {
             <CollapsibleContent className="p-4 pt-0 text-sm">
               <div className="pt-4 space-y-2">
                 <p>
-                  In no event shall Aptora, nor its directors, employees, partners, agents, suppliers, or affiliates, 
+                  In no event shall SmartQPX AI, nor its directors, employees, partners, agents, suppliers, or affiliates, 
                   be liable for any indirect, incidental, special, consequential, or punitive damages, including 
                   without limitation, loss of profits, data, use, goodwill, or other intangible losses.
                 </p>
                 
                 <p className="mt-2">
-                  Aptora does not warrant that:
+                  SmartQPX AI does not warrant that:
                 </p>
                 
                 <ul className="list-disc pl-5 space-y-1 mt-2">
@@ -126,8 +126,8 @@ const TermsOfService = () => {
           <p>
             If you have any questions about these Terms, please contact us at:
             <br />
-            <a href="mailto:legal@aptora.com" className="text-primary hover:underline">
-              legal@aptora.com
+            <a href="mailto:legal@smartqpx.com" className="text-primary hover:underline">
+              legal@smartqpx.com
             </a>
           </p>
         </div>

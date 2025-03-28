@@ -22,7 +22,7 @@ const CookiePolicy = () => {
         <div className="space-y-4">
           <Collapsible className="border rounded-lg overflow-hidden">
             <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left font-medium bg-muted/50 hover:bg-muted/80">
-              <span>How Aptora Uses Cookies</span>
+              <span>How SmartQPX AI Uses Cookies</span>
               <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 ui-open:rotate-180" />
             </CollapsibleTrigger>
             <CollapsibleContent className="p-4 pt-0 text-sm">
@@ -69,7 +69,7 @@ const CookiePolicy = () => {
                 
                 <div>
                   <h3 className="font-medium">First-Party Cookies</h3>
-                  <p>First-party cookies are set by Aptora directly when you use our platform.</p>
+                  <p>First-party cookies are set by SmartQPX AI directly when you use our platform.</p>
                 </div>
                 
                 <div>
@@ -108,8 +108,8 @@ const CookiePolicy = () => {
           <p>
             If you have any questions about our Cookie Policy, please contact us at:
             <br />
-            <a href="mailto:privacy@aptora.com" className="text-primary hover:underline">
-              privacy@aptora.com
+            <a href="mailto:privacy@smartqpx.com" className="text-primary hover:underline">
+              privacy@smartqpx.com
             </a>
           </p>
         </div>

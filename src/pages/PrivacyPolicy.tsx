@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
         <div className="p-6 bg-card rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Introduction</h2>
           <p className="mb-4">
-            At Aptora, we take your privacy seriously. This Privacy Policy explains how we collect,
+            At SmartQPX AI, we take your privacy seriously. This Privacy Policy explains how we collect,
             use, disclose, and safeguard your information when you use our e-learning platform.
           </p>
           <p>
@@ -88,8 +88,8 @@ const PrivacyPolicy = () => {
           <p>
             If you have questions or concerns about this Privacy Policy, please contact us at:
             <br />
-            <a href="mailto:privacy@aptora.com" className="text-primary hover:underline">
-              privacy@aptora.com
+            <a href="mailto:privacy@smartqpx.com" className="text-primary hover:underline">
+              privacy@smartqpx.com
             </a>
           </p>
         </div>
