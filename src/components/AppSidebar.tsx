@@ -48,7 +48,7 @@ const features: FeatureItem[] = [
     icon: Layers,
     subItems: [
       { title: "Content Generator", path: "/content-generator" },
-      { title: "Question Paper Generator", path: "/questionpaper-generator" },
+      { title: "Question Paper Generator", path: "/quiz-generator" },
       { title: "E-learning Materials", path: "/learning-materials" },
       { title: "AI Notes Generator", path: "/notes-generator" },
       { title: "Flashcard Generator", path: "/flashcard-generator" },
