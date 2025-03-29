@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { generateWithLangChain } from "@/utils/langchainUtils";
@@ -11,7 +10,7 @@ interface AIFeatureProps {
   title: string;
   description: string;
   placeholder: string;
-  feature: "content" | "quiz" | "materials" | "notes" | "flashcards" | "assistant";
+  feature: "content" | "question paper" | "materials" | "notes" | "flashcards" | "assistant";
 }
 
 export function AIFeature({ title, description, placeholder, feature }: AIFeatureProps) {

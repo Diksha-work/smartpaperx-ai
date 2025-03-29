@@ -1,4 +1,3 @@
-
 import { PromptTemplate } from "@langchain/core/prompts";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
@@ -40,7 +39,7 @@ const promptTemplates = {
     PROMPT: {userPrompt}`
   ),
   
-  quiz: PromptTemplate.fromTemplate(
+  "question paper": PromptTemplate.fromTemplate(
     `Generate a quiz based on the following prompt. 
     Include a mix of multiple choice, true/false, and short answer questions.
     

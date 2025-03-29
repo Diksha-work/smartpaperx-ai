@@ -10,7 +10,7 @@ const QuizGenerator = () => {
         title="Question Paper Generator"
         description="Create customized question papers with varying difficulty levels to test your knowledge."
         placeholder="Describe the question paper you need (e.g., '10 questions about World War II with 30% easy, 40% medium, and 30% difficult questions for high school students')"
-        feature="quiz"
+        feature="question paper"
       />
     </ProtectedRoute>
   );
