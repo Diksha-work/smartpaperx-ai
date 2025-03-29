@@ -18,7 +18,7 @@ export const OurTeam = () => {
       role: "Co-Founder & Frontend Developer",
       bio: "Creates beautiful, intuitive interfaces that make the AI learning platform accessible and engaging for all users.",
       photoUrl: "https://images.unsplash.com/photo-1598550880863-4e8aa3d0edb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-      linkedin: "https://linkedin.com/in/namratha-b",
+      linkedin: "https://linkedin.com/in/namrathab1412",
       github: "https://github.com/namratha-b",
       email: "namrathab2730@gmail.com"
     },
@@ -27,7 +27,7 @@ export const OurTeam = () => {
       role: "Co-Founder & Backend Developer",
       bio: "Develops the robust infrastructure that powers SmartQPX AI's educational features and data processing capabilities.",
       photoUrl: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-      linkedin: "https://linkedin.com/in/pranav-c",
+      linkedin: "https://linkedin.com/in/pranav-chintalapudi",
       github: "https://github.com/pranav-c",
       email: "pranavchintalapudi@gmail.com"
     }
