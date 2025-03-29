@@ -48,7 +48,7 @@ const features: FeatureItem[] = [
     icon: Layers,
     subItems: [
       { title: "Content Generator", path: "/content-generator" },
-      { title: "Quiz Generator", path: "/quiz-generator" },
+      { title: "Question Paper Generator", path: "/questionpaper-generator" },
       { title: "E-learning Materials", path: "/learning-materials" },
       { title: "AI Notes Generator", path: "/notes-generator" },
       { title: "Flashcard Generator", path: "/flashcard-generator" },
@@ -166,7 +166,7 @@ export function AppSidebar() {
             </Link>
           </div>
           <div className="mt-4 text-muted-foreground">
-            © {new Date().getFullYear()} Aptora. All rights reserved.
+            © {new Date().getFullYear()} SmartPaperX AI. All rights reserved.
           </div>
         </div>
       </SidebarFooter>
