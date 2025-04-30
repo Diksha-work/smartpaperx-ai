@@ -1,3 +1,4 @@
+
 import { PromptTemplate } from "@langchain/core/prompts";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
@@ -23,11 +24,25 @@ const getGoogleAI = () => {
   });
 };
 
+// Define subject specific context
+const subjectContext = {
+  "data-science": `You are a Data Science expert specialized in creating questions about statistics, machine learning, data analysis, visualization, and Python programming for data science.
+  Focus on concepts like regression, classification, clustering, dimensionality reduction, neural networks, feature engineering, and data preprocessing.`,
+  
+  "dbms": `You are a Database Management Systems expert specialized in creating questions about SQL, database design, normalization, transactions, concurrency control, and recovery.
+  Focus on concepts like ER modeling, relational algebra, SQL queries, stored procedures, triggers, and database optimization.`,
+  
+  "computer-networks": `You are a Computer Networks expert specialized in creating questions about network protocols, layers, routing, switching, addressing, and security.
+  Focus on concepts like TCP/IP, OSI model, IP addressing, subnetting, routing protocols, and network security.`
+};
+
 // Define prompt templates for each feature with formatting guidelines
 const promptTemplates = {
   content: PromptTemplate.fromTemplate(
     `Generate structured educational content based on the following prompt. 
     Include headings, explanations, examples, and key points.
+    
+    {subjectContextPrompt}
     
     IMPORTANT FORMATTING GUIDELINES:
     - DO NOT use markdown syntax (no **, *, _, or backticks)
@@ -40,8 +55,10 @@ const promptTemplates = {
   ),
   
   "question paper": PromptTemplate.fromTemplate(
-    `Generate a quiz based on the following prompt. 
+    `Generate a question paper based on the following prompt. 
     Include a mix of multiple choice, true/false, and short answer questions.
+    
+    {subjectContextPrompt}
     
     IMPORTANT FORMATTING GUIDELINES:
     - DO NOT use markdown syntax (no **, *, _, or backticks)
@@ -57,6 +74,8 @@ const promptTemplates = {
     `Generate a comprehensive learning roadmap or materials list based on the following prompt. 
     Include resources, steps, and recommendations.
     
+    {subjectContextPrompt}
+    
     IMPORTANT FORMATTING GUIDELINES:
     - DO NOT use markdown syntax (no **, *, _, or backticks)
     - Use plain text with clear section headings
@@ -70,6 +89,8 @@ const promptTemplates = {
   notes: PromptTemplate.fromTemplate(
     `Generate concise, organized notes based on the following prompt. 
     Include key concepts, definitions, and important information.
+    
+    {subjectContextPrompt}
     
     IMPORTANT FORMATTING GUIDELINES:
     - DO NOT use markdown syntax (no **, *, _, or backticks)
@@ -86,6 +107,8 @@ const promptTemplates = {
     Format as Question: [question] and Answer: [answer] pairs. 
     Make them concise and focused on key information.
     
+    {subjectContextPrompt}
+    
     IMPORTANT FORMATTING GUIDELINES:
     - DO NOT use markdown syntax (no **, *, _, or backticks)
     - Use plain text with clear labeling for questions and answers
@@ -95,24 +118,25 @@ const promptTemplates = {
     PROMPT: {userPrompt}`
   ),
   
-  assistant: PromptTemplate.fromTemplate(
-    `You are an educational assistant. Provide a helpful, accurate response to the following question or request.
+  image: PromptTemplate.fromTemplate(
+    `You are an educational image generator. Generate a detailed description for an image based on the following prompt.
+    The description should be detailed enough that it could be used with an image generation AI.
+    
+    {subjectContextPrompt}
     
     IMPORTANT FORMATTING GUIDELINES:
-    - DO NOT use markdown syntax (no **, *, _, or backticks)
-    - Use plain text with clear section headings where needed
-    - Use simple bullet points or numbered lists if appropriate
-    - Add spacing between sections for readability
-    - If code examples are needed, present them as plain text (without syntax highlighting markers)
+    - Focus on describing visual elements clearly
+    - Include important details like layout, objects, text, colors, etc.
+    - The image will be used in an educational context, so be appropriate and accurate
     
-    QUESTION: {userPrompt}
+    PROMPT: {userPrompt}
     
-    If this question relates to previous questions you've answered in this conversation, try to maintain context.`
+    Begin your response with "IMAGE DESCRIPTION:" followed by the detailed description.`
   ),
 };
 
 // Create a chain for generating content with Gemini
-export const createGenerationChain = (feature: keyof typeof promptTemplates) => {
+export const createGenerationChain = (feature: keyof typeof promptTemplates, subjectCtx?: string) => {
   const model = getGoogleAI();
   
   // Create the chain
@@ -131,11 +155,24 @@ export const createGenerationChain = (feature: keyof typeof promptTemplates) => 
 // Execute the chain with the user's prompt
 export const generateWithLangChain = async (
   feature: keyof typeof promptTemplates, 
-  userPrompt: string
+  userPrompt: string,
+  subject?: string
 ): Promise<string> => {
   try {
-    const chain = createGenerationChain(feature);
-    const result = await chain.invoke({ userPrompt });
+    const chain = createGenerationChain(feature, subject);
+    
+    // Add subject context if available
+    let subjectContextPrompt = "";
+    
+    if (subject && subjectContext[subject as keyof typeof subjectContext]) {
+      subjectContextPrompt = subjectContext[subject as keyof typeof subjectContext];
+    }
+    
+    const result = await chain.invoke({ 
+      userPrompt,
+      subjectContextPrompt
+    });
+    
     return result;
   } catch (error) {
     console.error("Error in LangChain generation:", error);

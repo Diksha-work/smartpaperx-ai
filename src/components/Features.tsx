@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { 
   FileText, 
   BookText, 
-  HelpCircle, 
+  ImageIcon, 
   Lightbulb, 
   ClipboardCheck, 
   Layers
@@ -66,10 +66,10 @@ const Features = () => {
       path: "/flashcard-generator"
     },
     {
-      title: "AI Learning Assistant",
-      description: "Get personalized help and answers to questions as you progress through your learning journey.",
-      icon: HelpCircle,
-      path: "/learning-assistant"
+      title: "Image Generation for Question Paper",
+      description: "Generate images and visual aids to enhance your question papers and learning materials.",
+      icon: ImageIcon,
+      path: "/image-generation"
     },
   ];
 

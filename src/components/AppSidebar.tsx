@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   FileText,
   BookText,
-  HelpCircle,
+  ImageIcon,
   Lightbulb,
   ClipboardCheck,
   Layers,
@@ -52,7 +52,7 @@ const features: FeatureItem[] = [
       { title: "E-learning Materials", path: "/learning-materials" },
       { title: "AI Notes Generator", path: "/notes-generator" },
       { title: "Flashcard Generator", path: "/flashcard-generator" },
-      { title: "AI Learning Assistant", path: "/learning-assistant" },
+      { title: "Image Generation for Question Paper", path: "/image-generation" },
     ],
   },
   {

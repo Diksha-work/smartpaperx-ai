@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, ChevronDown, FileText, FlaskConical, Layers, Lightbulb, MessagesSquare, ScrollText, MenuIcon } from "lucide-react";
+import { Check, ChevronDown, FileText, FlaskConical, Layers, Lightbulb, ImageIcon, ScrollText, MenuIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,10 +57,10 @@ export const FeaturesMenu: React.FC<FeaturesMenuProps> = ({ isMobile = false }) 
       path: "/flashcard-generator",
     },
     {
-      name: "AI Learning Assistant",
-      description: "Get personalized help",
-      icon: <MessagesSquare className="h-4 w-4 mr-2" />,
-      path: "/learning-assistant",
+      name: "Image Generation for Question Paper",
+      description: "Generate visual aids for question papers",
+      icon: <ImageIcon className="h-4 w-4 mr-2" />,
+      path: "/image-generation",
     },
   ];
 

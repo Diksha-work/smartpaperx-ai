@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { generateWithLangChain } from "@/utils/langchainUtils";
@@ -10,10 +11,17 @@ interface AIFeatureProps {
   title: string;
   description: string;
   placeholder: string;
-  feature: "content" | "question paper" | "materials" | "notes" | "flashcards" | "assistant";
+  feature: "content" | "question paper" | "materials" | "notes" | "flashcards" | "image";
+  subjectContext?: string;
 }
 
-export function AIFeature({ title, description, placeholder, feature }: AIFeatureProps) {
+export function AIFeature({ 
+  title, 
+  description, 
+  placeholder, 
+  feature,
+  subjectContext
+}: AIFeatureProps) {
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,8 +43,8 @@ export function AIFeature({ title, description, placeholder, feature }: AIFeatur
     setResult("");
 
     try {
-      // Use LangChain to generate content
-      const generatedContent = await generateWithLangChain(feature, prompt);
+      // Use LangChain to generate content with subject context if available
+      const generatedContent = await generateWithLangChain(feature, prompt, subjectContext);
       setResult(generatedContent);
       
       // Set default PDF filename based on feature type
