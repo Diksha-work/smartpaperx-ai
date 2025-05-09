@@ -13,7 +13,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "@/lib/firebase";
 import { toast } from "sonner";
-import { useNavigate as useReactRouterNavigate, useLocation as useReactRouterLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { sendWelcomeEmail } from "@/utils/emailUtils";
 
 // Initialize Firebase
@@ -41,10 +41,9 @@ export function useAuth() {
   return context;
 }
 
-// Create a wrapper component that uses React Router hooks
-function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode }) {
-  const navigate = useReactRouterNavigate();
-  const location = useReactRouterLocation();
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
@@ -175,9 +174,4 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-// Export the AuthProvider that doesn't directly use router hooks
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  return <AuthProviderWithRouterAccess>{children}</AuthProviderWithRouterAccess>;
 }
