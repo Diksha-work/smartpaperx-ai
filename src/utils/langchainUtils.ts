@@ -5,7 +5,7 @@
 type FeatureType = "content" | "question paper" | "materials" | "notes" | "flashcards" | "image";
 
 /**
- * Generate content using OpenRouter API with Microsoft Phi-4 model
+ * Generate content using OpenRouter API with Deepseek Prover model
  */
 export const generateWithLangChain = async (
   feature: FeatureType,
@@ -32,7 +32,7 @@ export const generateWithLangChain = async (
         "X-Title": "EduGenius AI"
       },
       body: JSON.stringify({
-        model: "microsoft/phi-4-reasoning-plus:free",
+        model: "deepseek/deepseek-prover-v2:free",
         messages: [
           { role: "user", content: formattedPrompt }
         ]
