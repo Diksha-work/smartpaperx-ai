@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 
 const ImageGeneration = () => {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("langchain");
+  const [activeTab, setActiveTab] = useState("textToImage");
   
   // AI Horde state
   const [prompt, setPrompt] = useState("");
@@ -47,7 +47,7 @@ const ImageGeneration = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "apikey": "guzO_KolqjKjd251PFwuTg"
+          "apikey": import.meta.env.VITE_HORDE_API_KEY
         },
         body: JSON.stringify({
           prompt: prompt,
@@ -152,11 +152,11 @@ const ImageGeneration = () => {
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-2 mb-6 w-full md:w-1/2">
-            <TabsTrigger value="langchain">LangChain</TabsTrigger>
-            <TabsTrigger value="aihorde">AI Horde</TabsTrigger>
+            <TabsTrigger value="textToImage">AI Horde Text-to-Image</TabsTrigger>
+            <TabsTrigger value="aihorde">AI Horde Generator</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="langchain" className="w-full">
+          <TabsContent value="textToImage" className="w-full">
             <AIFeature
               title="Image Generation for Question Paper"
               description="Generate images and visual aids to enhance your question papers and learning materials."

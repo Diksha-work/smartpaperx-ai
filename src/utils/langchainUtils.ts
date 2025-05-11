@@ -1,5 +1,5 @@
 
-// This file has been repurposed to use AI Horde instead of LangChain/Gemini
+// This file has been completely redesigned to use AI Horde instead of LangChain/Gemini
 
 // Define feature types
 type FeatureType = "content" | "question paper" | "materials" | "notes" | "flashcards" | "image";
@@ -15,7 +15,7 @@ export const generateWithLangChain = async (
   subject?: string
 ): Promise<string> => {
   try {
-    const API_KEY = "guzO_KolqjKjd251PFwuTg";
+    const API_KEY = import.meta.env.VITE_HORDE_API_KEY;
     
     if (!API_KEY) {
       throw new Error("VITE_HORDE_API_KEY is not defined");
@@ -142,8 +142,8 @@ const formatPromptForFeature = (feature: FeatureType, userPrompt: string, subjec
   }
 };
 
-// Legacy function signatures maintained for compatibility
+// These functions are kept for backward compatibility but are now empty
 export const createGenerationChain = () => {
-  console.warn("createGenerationChain is deprecated when using AI Horde");
+  console.warn("createGenerationChain is deprecated, using AI Horde instead");
   return null;
 };
