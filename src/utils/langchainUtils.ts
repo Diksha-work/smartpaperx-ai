@@ -5,7 +5,7 @@
 type FeatureType = "content" | "question paper" | "materials" | "notes" | "flashcards" | "image";
 
 /**
- * Generate content using OpenRouter API with Deepseek Prover model
+ * Generate content using OpenRouter API
  */
 export const generateWithLangChain = async (
   feature: FeatureType,
@@ -13,21 +13,20 @@ export const generateWithLangChain = async (
   subject?: string
 ): Promise<string> => {
   try {
-    const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-    
-    if (!API_KEY) {
-      throw new Error("VITE_OPENROUTER_API_KEY is not defined");
-    }
-    
     // Create a prompt based on the feature type
     const formattedPrompt = formatPromptForFeature(feature, userPrompt, subject);
+    
+    // For image feature, return special text suggesting Mermaid diagram generation
+    if (feature === "image") {
+      return `## Diagram Description\n\nFor educational diagrams, we recommend using the Mermaid Diagram Generator tab in the Image Generation page. Here's a suggested Mermaid code for what you described:\n\n\`\`\`mermaid\n${generateSampleMermaidCode(userPrompt)}\n\`\`\`\n\nYou can copy this code and paste it into the Mermaid Diagram Generator to customize it further.`;
+    }
     
     // OpenRouter API request
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_KEY}`,
+        "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
         "HTTP-Referer": window.location.origin,
         "X-Title": "EduGenius AI"
       },
@@ -53,7 +52,7 @@ export const generateWithLangChain = async (
       return "Unexpected response format from the AI model.";
     }
   } catch (error) {
-    console.error("Error in OpenRouter generation:", error);
+    console.error("Error in generation:", error);
     throw error;
   }
 };
@@ -105,8 +104,58 @@ const formatPromptForFeature = (feature: FeatureType, userPrompt: string, subjec
   }
 };
 
+/**
+ * Generate sample Mermaid code based on user prompt
+ */
+const generateSampleMermaidCode = (userPrompt: string): string => {
+  if (userPrompt.toLowerCase().includes("flow") || userPrompt.toLowerCase().includes("process")) {
+    return `flowchart TD
+    A[Start Process] --> B{Decision Point}
+    B -->|Option 1| C[Action 1]
+    B -->|Option 2| D[Action 2]
+    C --> E[Result 1]
+    D --> F[Result 2]
+    E --> G[End Process]
+    F --> G`;
+  } 
+  else if (userPrompt.toLowerCase().includes("class") || userPrompt.toLowerCase().includes("object")) {
+    return `classDiagram
+    class Student {
+      +String name
+      +int id
+      +study()
+      +submitAssignment()
+    }
+    class Teacher {
+      +String name
+      +String subject
+      +teach()
+      +gradeAssignment()
+    }
+    Student --> Teacher: learns from`;
+  } 
+  else if (userPrompt.toLowerCase().includes("sequence") || userPrompt.toLowerCase().includes("interaction")) {
+    return `sequenceDiagram
+    participant User
+    participant System
+    participant Database
+    
+    User->>System: Request data
+    System->>Database: Query data
+    Database-->>System: Return results
+    System-->>User: Display results`;
+  } 
+  else {
+    return `graph TD
+    A[Main Concept] --> B[Related Idea 1]
+    A --> C[Related Idea 2]
+    B --> D[Example 1]
+    C --> E[Example 2]`;
+  }
+};
+
 // These functions are kept for backward compatibility but are now empty
 export const createGenerationChain = () => {
-  console.warn("createGenerationChain is deprecated, using OpenRouter instead");
+  console.warn("createGenerationChain is deprecated, using new generation methods instead");
   return null;
 };

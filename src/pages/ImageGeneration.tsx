@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Download } from "lucide-react";
+import { MermaidDiagramGenerator } from "@/components/ai/MermaidDiagramGenerator";
 
 // AI Horde types for image generation
 interface AIHordeResponse {
@@ -27,7 +28,7 @@ interface GenerationStatus {
 
 const ImageGeneration = () => {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("textToImage");
+  const [activeTab, setActiveTab] = useState("diagram");
   
   // AI Horde state
   const [prompt, setPrompt] = useState("");
@@ -72,7 +73,7 @@ const ImageGeneration = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "apikey": import.meta.env.VITE_HORDE_API_KEY
+          "apikey": "0000000000" // Anonymous API key for AI Horde
         },
         body: JSON.stringify({
           prompt: prompt,
@@ -189,21 +190,23 @@ const ImageGeneration = () => {
     <ProtectedRoute>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-2">Image Generation</h1>
-        <p className="text-muted-foreground mb-6">Create custom images for your educational content using AI. Choose between text-to-image or direct image generation.</p>
+        <p className="text-muted-foreground mb-6">Create custom images and diagrams for your educational content using AI. Choose between diagram generation or direct image generation.</p>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-2 mb-6 w-full md:w-1/2">
-            <TabsTrigger value="textToImage">OpenRouter Text-to-Image</TabsTrigger>
+            <TabsTrigger value="diagram">Mermaid Diagram Generator</TabsTrigger>
             <TabsTrigger value="aihorde">AI Horde Image Generator</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="textToImage" className="w-full">
-            <AIFeature
-              title="Image Generation for Question Paper"
-              description="Generate images and visual aids to enhance your question papers and learning materials."
-              placeholder="Describe the image you need (e.g., 'A diagram showing the water cycle with labels')"
-              feature="image"
-            />
+          <TabsContent value="diagram" className="w-full">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Generate Diagrams for Education</h2>
+              <p className="text-muted-foreground mb-4">
+                Create flowcharts, sequence diagrams, class diagrams, and more using Mermaid syntax. 
+                Perfect for educational materials and visualizing concepts.
+              </p>
+              <MermaidDiagramGenerator />
+            </div>
           </TabsContent>
           
           <TabsContent value="aihorde" className="w-full">
