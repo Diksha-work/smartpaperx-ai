@@ -43,7 +43,7 @@ export function AIFeature({
     setResult("");
 
     try {
-      // Use AI Horde to generate content with subject context if available
+      // Use OpenRouter to generate content with subject context if available
       const generatedContent = await generateWithLangChain(feature, prompt, subjectContext);
       setResult(generatedContent);
       
