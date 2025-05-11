@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import mermaid from "mermaid";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
@@ -14,29 +13,72 @@ export function MermaidDiagramGenerator() {
   B -- No --> D[Do Something Else]`
   );
   const outputRef = useRef<HTMLDivElement>(null);
+  const [mermaidInstance, setMermaidInstance] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Initialize mermaid
+  // Load Mermaid from CDN
   useEffect(() => {
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: 'default',
-      securityLevel: 'loose',
-    });
+    // Check if Mermaid script is already loaded
+    if (window.mermaid) {
+      setMermaidInstance(window.mermaid);
+      return;
+    }
+
+    setIsLoading(true);
+    // Create script element to load Mermaid from CDN
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js';
+    script.async = true;
+    script.onload = () => {
+      // Initialize mermaid after script is loaded
+      if (window.mermaid) {
+        window.mermaid.initialize({
+          startOnLoad: false,
+          theme: 'default',
+          securityLevel: 'loose',
+        });
+        setMermaidInstance(window.mermaid);
+      }
+      setIsLoading(false);
+    };
+    script.onerror = () => {
+      setError("Failed to load Mermaid library");
+      setIsLoading(false);
+    };
+    document.body.appendChild(script);
+
+    // Cleanup function
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   // Render the diagram
   const renderDiagram = async () => {
-    if (!diagramCode.trim()) return;
+    if (!diagramCode.trim() || !mermaidInstance) return;
+    setError(null);
 
     try {
       if (outputRef.current) {
-        const { svg } = await mermaid.render("liveDiagram", diagramCode);
-        outputRef.current.innerHTML = svg;
+        // Clear previous content
+        outputRef.current.innerHTML = '';
+        
+        // Create a unique ID for this rendering
+        const id = `mermaid-diagram-${Date.now()}`;
+        
+        // Render using the mermaid instance
+        await mermaidInstance.render(id, diagramCode).then((result: any) => {
+          if (outputRef.current) {
+            outputRef.current.innerHTML = result.svg;
+          }
+        });
       }
     } catch (err) {
       if (outputRef.current) {
-        outputRef.current.innerHTML = `<p style="color: red;">Error: ${err instanceof Error ? err.message : "An error occurred"}</p>`;
+        outputRef.current.innerHTML = '';
       }
+      setError(`Error: ${err instanceof Error ? err.message : "An error occurred rendering the diagram"}`);
       console.error("Mermaid rendering error:", err);
     }
   };
@@ -70,9 +112,16 @@ export function MermaidDiagramGenerator() {
       <Button
         onClick={renderDiagram}
         className="mb-6"
+        disabled={isLoading || !mermaidInstance}
       >
-        Render Diagram
+        {isLoading ? "Loading Mermaid..." : "Render Diagram"}
       </Button>
+      
+      {error && (
+        <div className="text-red-500 mb-4 p-2 border border-red-300 rounded bg-red-50">
+          {error}
+        </div>
+      )}
       
       <Card className="p-4">
         <div 
@@ -83,4 +132,11 @@ export function MermaidDiagramGenerator() {
       </Card>
     </div>
   );
+}
+
+// Add TypeScript declaration for window.mermaid
+declare global {
+  interface Window {
+    mermaid: any;
+  }
 }
