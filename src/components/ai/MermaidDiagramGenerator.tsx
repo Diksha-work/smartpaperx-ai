@@ -5,7 +5,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { ExternalLink } from "lucide-react";
 
-export function MermaidDiagramGenerator() {
+interface MermaidDiagramGeneratorProps {
+  initialCode?: string;
+}
+
+export function MermaidDiagramGenerator({ initialCode }: MermaidDiagramGeneratorProps) {
   const [diagramCode, setDiagramCode] = useState<string>(
     `flowchart TD
   A[Start] --> B{Decision}
@@ -16,6 +20,17 @@ export function MermaidDiagramGenerator() {
   const [mermaidInstance, setMermaidInstance] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Update diagram code when initialCode changes
+  useEffect(() => {
+    if (initialCode) {
+      setDiagramCode(initialCode);
+      // If mermaid is already loaded, render the new diagram
+      if (mermaidInstance) {
+        renderDiagram(initialCode);
+      }
+    }
+  }, [initialCode, mermaidInstance]);
 
   // Load Mermaid from CDN
   useEffect(() => {
@@ -55,8 +70,8 @@ export function MermaidDiagramGenerator() {
   }, []);
 
   // Render the diagram
-  const renderDiagram = async () => {
-    if (!diagramCode.trim() || !mermaidInstance) return;
+  const renderDiagram = async (code = diagramCode) => {
+    if (!code.trim() || !mermaidInstance) return;
     setError(null);
 
     try {
@@ -68,7 +83,7 @@ export function MermaidDiagramGenerator() {
         const id = `mermaid-diagram-${Date.now()}`;
         
         // Render using the mermaid instance
-        await mermaidInstance.render(id, diagramCode).then((result: any) => {
+        await mermaidInstance.render(id, code).then((result: any) => {
           if (outputRef.current) {
             outputRef.current.innerHTML = result.svg;
           }
@@ -110,7 +125,7 @@ export function MermaidDiagramGenerator() {
       />
       
       <Button
-        onClick={renderDiagram}
+        onClick={() => renderDiagram()}
         className="mb-6"
         disabled={isLoading || !mermaidInstance}
       >
