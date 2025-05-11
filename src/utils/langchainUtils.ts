@@ -2,7 +2,7 @@
 // This file has been redesigned to use OpenRouter instead of AI Horde/LangChain
 
 // Define feature types
-type FeatureType = "content" | "question paper" | "materials" | "notes" | "flashcards";
+type FeatureType = "content" | "question paper" | "materials" | "notes" | "flashcards" | "image";
 
 /**
  * Generate content using OpenRouter API
@@ -90,6 +90,9 @@ const formatPromptForFeature = (feature: FeatureType, userPrompt: string, subjec
     
     case "flashcards":
       return `${subjectContext}Generate flashcards on: ${userPrompt}. Format as Question: [question] and Answer: [answer] pairs.`;
+    
+    case "image":
+      return `${subjectContext}Suggest a mermaid diagram for: ${userPrompt}. Create a structured diagram using mermaid syntax.`;
     
     default:
       return `${subjectContext}${userPrompt}`;
