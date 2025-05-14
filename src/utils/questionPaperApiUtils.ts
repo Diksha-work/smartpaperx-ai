@@ -20,7 +20,7 @@ export async function generateQuestionPaper(
   numQuestions: number,
   btlDistribution: BtlDistribution
 ): Promise<QuestionPaperResponse> {
-  const url = "https://7021-2401-4900-8839-1ae3-6df5-402-cff6-986.ngrok-free.app/generate_paper";
+  const url = "https://fca5-2401-4900-8839-1ae3-6df5-402-cff6-986.ngrok-free.app/generate_paper";
   
   const apiSubject = subject === "data-science" ? "ds" : subject === "computer-networks" ? "cn" : "dbms";
   
