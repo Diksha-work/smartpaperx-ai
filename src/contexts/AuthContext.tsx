@@ -91,7 +91,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
         await sendWelcomeEmail(email, fullName);
       }
       
-      toast.success("Welcome to AptoraX AI! Your account has been created successfully!");
+      toast.success("Welcome to SmartQPX AI! Your account has been created successfully!");
       return result.user;
     } catch (error: any) {
       let message = "Failed to create an account";
@@ -111,7 +111,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const login = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Welcome back to AptoraX AI! You have successfully logged in.");
+      toast.success("Welcome back to SmartQPX AI! You have successfully logged in.");
       return result.user;
     } catch (error: any) {
       let message = "Failed to log in";
@@ -146,7 +146,7 @@ function AuthProviderWithRouterAccess({ children }: { children: React.ReactNode 
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
-      toast.success("You've been logged out of AptoraX AI");
+      toast.success("You've been logged out of SmartQPX AI");
     } catch (error) {
       toast.error("Failed to log out");
       throw error;

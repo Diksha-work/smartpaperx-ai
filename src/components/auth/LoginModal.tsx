@@ -78,7 +78,7 @@ export function LoginModal({ isOpen, onClose, onSignupClick }: LoginModalProps) 
           <DialogHeader>
             <DialogTitle>Login to your account</DialogTitle>
             <DialogDescription>
-              Enter your email and password to login to AptoraX AI.
+              Enter your email and password to login to SmartQPX AI.
             </DialogDescription>
           </DialogHeader>
           

@@ -1,12 +1,12 @@
 
-# AptoraX AI - AI-Powered E-Learning Platform
+# SmartQPX AI - AI-Powered Question Paper Generation Platform
 ---
 
 ## 📘 Project Overview
 
-AptoraX AI is an innovative, AI-powered e-learning platform designed to transform the educational experience by leveraging artificial intelligence to generate personalized learning content. The platform offers a range of features including content generation, quiz creation, study notes, flashcards, and an AI learning assistant to support students in their educational journey.
+SmartQPX AI is an innovative, AI-powered educational platform designed to transform the question paper creation process by leveraging artificial intelligence to generate personalized educational content. The platform offers a range of features including question paper generation, content generation, quiz creation, study notes, flashcards, and diagram generation to support educators and students.
 
-The core mission of AptoraX AI is to make education more adaptive to individual learning styles and needs. Through intelligent content generation, the platform helps students and educators create customized educational materials that align with specific learning objectives.
+The core mission of SmartQPX AI is to make education more efficient and adaptive to individual learning needs. Through intelligent content generation, the platform helps students and educators create customized educational materials that align with specific learning objectives.
 
 ---
 
@@ -22,7 +22,8 @@ The core mission of AptoraX AI is to make education more adaptive to individual 
 
 ### AI Integration
 - **Google Gemini API** – Powers the AI features
-- **Gemini 1.5 Pro** – Language model for generating learning content
+- **OpenRouter API** – Additional AI capabilities
+- **Local Question Paper API** – Custom API for question paper generation
 
 ### Document Generation
 - **jsPDF** – PDF generation
@@ -30,6 +31,9 @@ The core mission of AptoraX AI is to make education more adaptive to individual 
 
 ### State Management
 - **React Query** – For efficient data fetching and caching
+
+### Authentication
+- **Firebase Authentication** – User authentication and management
 
 ### Build Tools
 - **Vite** – Frontend build tool
@@ -39,25 +43,28 @@ The core mission of AptoraX AI is to make education more adaptive to individual 
 
 ## ✨ Key Features
 
-### 1. Content Generator
-Generates structured educational content from a topic or prompt.
+### 1. Question Paper Generator
+Generates specialized question papers for Data Science, DBMS, and Computer Networks with configurable difficulty levels.
 
-### 2. Quiz Generator
+### 2. Content Generator
+Creates structured educational content from a topic or prompt.
+
+### 3. Quiz Generator
 Builds custom quizzes with multiple question types based on learning goals.
 
-### 3. E-learning Materials
+### 4. E-learning Materials
 Creates guided learning roadmaps and subject breakdowns.
 
-### 4. AI Notes Generator
+### 5. AI Notes Generator
 Summarizes complex content into clear, concise notes.
 
-### 5. Flashcard Generator
+### 6. Flashcard Generator
 Creates flashcards in Q&A format for easy review.
 
-### 6. AI Learning Assistant
-An interactive assistant to answer study-related questions.
+### 7. Diagram Generation
+Creates visual diagrams using Mermaid syntax based on user descriptions.
 
-### 7. PDF Export
+### 8. PDF Export
 Export all generated content in clean, downloadable PDFs.
 
 ---
@@ -65,33 +72,38 @@ Export all generated content in clean, downloadable PDFs.
 ## 🤖 How AI Integration Works
 
 1. User submits a prompt/request
-2. Request sent to Gemini API with a system prompt
-3. Gemini generates content specific to the feature
+2. Request sent to appropriate AI API with specific parameters
+3. AI generates content specific to the feature
 4. Output is rendered and available for PDF download
 
-Each tool uses a custom system prompt to tailor the format and style for educational use.
+Each tool uses a custom approach tailored for educational use cases.
 
 ---
 
 ## 📁 Folder Structure
 ```
-aptorax-ai/
+smartqpx-ai/
 ├── public/                  # Static files
 ├── src/                     # Source code
 │   ├── assets/              # Static assets/images
 │   ├── components/          # Reusable UI components
+│   │   ├── ai/              # AI-related components
+│   │   ├── auth/            # Authentication components
+│   │   ├── header/          # Header components
 │   │   ├── ui/              # shadcn/ui components
-│   │   └── ...              # Custom components
+│   │   └── ...              # Other custom components
+│   ├── contexts/            # React contexts
 │   ├── hooks/               # Custom React hooks
 │   ├── lib/                 # Utility functions
 │   ├── pages/               # Feature and static pages
 │   │   ├── ContentGenerator.tsx
-│   │   ├── QuizGenerator.tsx
+│   │   ├── QuestionPaperGenerator.tsx
 │   │   ├── NotesGenerator.tsx
 │   │   ├── FlashcardGenerator.tsx
-│   │   ├── LearningAssistant.tsx
+│   │   ├── ImageGeneration.tsx
 │   │   ├── LearningMaterials.tsx
 │   │   └── ...
+│   ├── utils/               # Utility functions
 │   ├── App.tsx              # Root component
 │   └── main.tsx             # Entry point
 ├── index.html               # HTML template
@@ -102,12 +114,12 @@ aptorax-ai/
 
 ---
 
-## 🔐 Environment Variables
-Create a `.env` file in the root of the project:
-```
-VITE_GEMINI_API_KEY=your_gemini_api_key
-```
-Obtain your Gemini API key from [Google AI Studio](https://makersuite.google.com/).
+## 🔐 Authentication
+
+SmartQPX AI uses Firebase Authentication for user management, providing:
+- Email/password registration and login
+- Password reset functionality
+- Protected routes for authenticated users
 
 ---
 
@@ -119,6 +131,8 @@ Obtain your Gemini API key from [Google AI Studio](https://makersuite.google.com
 
 ### Steps
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/smartqpx-ai.git
 
 # Install dependencies
 npm install
@@ -131,28 +145,9 @@ npm run dev
 
 ---
 
-## 👨‍💻 Team Members
-- Diksha Annamalai – Founder & Lead Developer
-- Namratha B – Co-Founder & Frontend Developer
-- Pranav C – Co-Founder & Backend Developer
-
----
-
-## 📬 Contact
-- 🌐 Website: [aptorax.ai](https://aptorax.ai)
-- 📧 Email: diksha.annamalai@gmail.com
-- 🐦 Twitter: [@aptorax_ai](https://twitter.com/aptorax_ai)
-- 🔗 LinkedIn: [AptoraX AI](https://linkedin.com/company/aptorax-ai)
-
----
-
-## 📄 License
-This project is licensed under the **MIT License** – see the `LICENSE` file for details.
-
----
-
 ## 🙏 Acknowledgments
 - Google Gemini API for AI capabilities
+- OpenRouter for advanced content generation
 - shadcn/ui for the component library
 - Tailwind CSS for fast and responsive styling
 - React & TypeScript communities for extensive docs
@@ -160,4 +155,4 @@ This project is licensed under the **MIT License** – see the `LICENSE` file fo
 
 ---
 
-> © 2025 AptoraX AI. All rights reserved.
+> © 2024 SmartQPX AI. All rights reserved.

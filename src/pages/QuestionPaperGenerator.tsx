@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { MermaidDiagramGenerator } from "@/components/ai/MermaidDiagramGenerator";
+import { DiagramCodeGenerator } from "@/components/ai/DiagramCodeGenerator";
 import { generateQuestionPaper } from "@/utils/questionPaperApiUtils";
 import { generateWithLangChain } from "@/utils/langchainUtils";
 import { generatePDF } from "@/utils/pdfUtils";
@@ -56,6 +57,9 @@ const QuestionPaperGenerator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState<string[]>([]);
   const [isLocalApi, setIsLocalApi] = useState(false);
+  
+  // State for diagram generation
+  const [generatedCode, setGeneratedCode] = useState<string>("");
   
   useEffect(() => {
     if (subject && subjectInfo[subject as keyof typeof subjectInfo]) {
@@ -200,6 +204,10 @@ const QuestionPaperGenerator = () => {
       });
     }
   };
+
+  const handleCodeGenerated = (code: string) => {
+    setGeneratedCode(code);
+  };
   
   return (
     <ProtectedRoute>
@@ -314,7 +322,22 @@ const QuestionPaperGenerator = () => {
             <p className="text-muted-foreground mb-6">
               Use the diagram generator below to create visual aids for your question paper.
             </p>
-            <MermaidDiagramGenerator />
+            
+            <div className="mb-10">
+              <h3 className="text-lg font-semibold mb-4">Step 1: Generate Mermaid Code</h3>
+              <p className="text-muted-foreground mb-4">
+                Describe what kind of diagram you want, and the AI will generate Mermaid code for you.
+              </p>
+              <DiagramCodeGenerator onCodeGenerated={handleCodeGenerated} />
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Step 2: Visualize and Edit</h3>
+              <p className="text-muted-foreground mb-4">
+                Edit the generated code or write your own Mermaid syntax to create custom diagrams.
+              </p>
+              <MermaidDiagramGenerator initialCode={generatedCode} />
+            </div>
           </div>
         )}
       </div>

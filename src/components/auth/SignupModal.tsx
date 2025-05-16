@@ -82,7 +82,7 @@ export function SignupModal({ isOpen, onClose, onSuccess, onLoginClick }: Signup
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Sign Up</DialogTitle>
           <DialogDescription>
-            Create an account to access all AptoraX AI features
+            Create an account to access all SmartQPX AI features
           </DialogDescription>
         </DialogHeader>
         
