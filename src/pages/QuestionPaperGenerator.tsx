@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -60,14 +59,12 @@ const QuestionPaperGenerator = () => {
   
   // State for diagram generation
   const [generatedCode, setGeneratedCode] = useState<string>("");
-  const [showDiagramTools, setShowDiagramTools] = useState(false);
   
   useEffect(() => {
     if (subject && subjectInfo[subject as keyof typeof subjectInfo]) {
       setSubjectData(subjectInfo[subject as keyof typeof subjectInfo]);
       setIsLocalApi(["data-science", "dbms", "computer-networks"].includes(subject));
       setQuestions([]);
-      setShowDiagramTools(false);
     } else {
       toast({
         title: "Invalid subject",
@@ -100,7 +97,6 @@ const QuestionPaperGenerator = () => {
       
       if (result.success && result.questions.length > 0) {
         setQuestions(result.questions);
-        setShowDiagramTools(true);
         toast({
           title: "Question Paper Generated",
           description: `Generated ${result.questions.length} questions successfully.`,
@@ -147,7 +143,6 @@ const QuestionPaperGenerator = () => {
         .map(q => q.trim());
       
       setQuestions(questionsList);
-      setShowDiagramTools(true);
     } catch (error) {
       console.error("Error generating content:", error);
       toast({
@@ -320,30 +315,29 @@ const QuestionPaperGenerator = () => {
           </Card>
         </div>
         
-        {showDiagramTools && (
-          <div className="mt-8 border-t pt-8">
-            <h2 className="text-2xl font-bold mb-4">Create Diagrams for Your Question Paper</h2>
-            <p className="text-muted-foreground mb-6">
-              Use the diagram generator below to create visual aids for your question paper.
+        {/* Diagram tools - now always visible */}
+        <div className="mt-8 border-t pt-8">
+          <h2 className="text-2xl font-bold mb-4">Create Diagrams for Your Question Paper</h2>
+          <p className="text-muted-foreground mb-6">
+            Use the diagram generator below to create visual aids for your question paper.
+          </p>
+          
+          <div className="mb-10">
+            <h3 className="text-lg font-semibold mb-4">Step 1: Generate Mermaid Code</h3>
+            <p className="text-muted-foreground mb-4">
+              Describe what kind of diagram you want, and the AI will generate Mermaid code for you.
             </p>
-            
-            <div className="mb-10">
-              <h3 className="text-lg font-semibold mb-4">Step 1: Generate Mermaid Code</h3>
-              <p className="text-muted-foreground mb-4">
-                Describe what kind of diagram you want, and the AI will generate Mermaid code for you.
-              </p>
-              <DiagramCodeGenerator onCodeGenerated={handleCodeGenerated} />
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Step 2: Visualize and Edit</h3>
-              <p className="text-muted-foreground mb-4">
-                Edit the generated code or write your own Mermaid syntax to create custom diagrams.
-              </p>
-              <MermaidDiagramGenerator initialCode={generatedCode} compact={true} />
-            </div>
+            <DiagramCodeGenerator onCodeGenerated={handleCodeGenerated} />
           </div>
-        )}
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Step 2: Visualize and Edit</h3>
+            <p className="text-muted-foreground mb-4">
+              Edit the generated code or write your own Mermaid syntax to create custom diagrams.
+            </p>
+            <MermaidDiagramGenerator initialCode={generatedCode} compact={true} />
+          </div>
+        </div>
       </div>
     </ProtectedRoute>
   );
