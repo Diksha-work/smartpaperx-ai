@@ -7,10 +7,12 @@ import { ExternalLink } from "lucide-react";
 
 interface MermaidDiagramGeneratorProps {
   initialCode?: string;
+  compact?: boolean;
 }
 
-export function MermaidDiagramGenerator({ initialCode }: MermaidDiagramGeneratorProps) {
+export function MermaidDiagramGenerator({ initialCode, compact = false }: MermaidDiagramGeneratorProps) {
   const [diagramCode, setDiagramCode] = useState<string>(
+    initialCode || 
     `flowchart TD
   A[Start] --> B{Decision}
   B -- Yes --> C[Do Something]
@@ -104,8 +106,8 @@ export function MermaidDiagramGenerator({ initialCode }: MermaidDiagramGenerator
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Live Mermaid Diagram Generator</h2>
+    <div className={compact ? "px-0 py-4" : "container mx-auto px-4 py-8"}>
+      {!compact && <h2 className="text-2xl font-bold mb-4">Live Mermaid Diagram Generator</h2>}
       
       <Button
         variant="default"
