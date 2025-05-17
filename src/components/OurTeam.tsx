@@ -17,7 +17,7 @@ export const OurTeam = () => {
       name: "Namratha B",
       role: "Co-Founder & Frontend Developer",
       bio: "Creates beautiful, intuitive interfaces that make the AI learning platform accessible and engaging for all users.",
-      photoUrl: "https://images.unsplash.com/photo-1598550880863-4e8aa3d0edb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+      photoUrl: "/lovable-uploads/fc483f2a-1699-43ef-980d-b5c62321c0ac.png",
       linkedin: "https://linkedin.com/in/namrathab1412",
       github: "https://github.com/namratha-b",
       email: "namrathab2730@gmail.com"
@@ -26,7 +26,7 @@ export const OurTeam = () => {
       name: "Pranav C",
       role: "Co-Founder & Backend Developer",
       bio: "Develops the robust infrastructure that powers AptoraX AI's educational features and data processing capabilities.",
-      photoUrl: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+      photoUrl: "/lovable-uploads/5f13c994-1aed-434c-a15d-2e7ad161af0c.png",
       linkedin: "https://linkedin.com/in/pranav-chintalapudi",
       github: "https://github.com/pranav-c",
       email: "pranavchintalapudi@gmail.com"
