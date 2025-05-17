@@ -20,7 +20,7 @@ export async function generateQuestionPaper(
   numQuestions: number,
   btlDistribution: BtlDistribution
 ): Promise<QuestionPaperResponse> {
-  const url = "https://59fc-2a09-bac5-3b4a-7eb-00-ca-164.ngrok-free.app/generate_raw_questions";
+  const url = "https://a9b5-2401-4900-33b6-d7b2-d46c-f7ae-6faf-9147.ngrok-free.app/generate_raw_questions";
   
   const apiSubject = subject === "data-science" ? "ds" : subject === "computer-networks" ? "cn" : "dbms";
   
@@ -31,6 +31,9 @@ export async function generateQuestionPaper(
   };
 
   try {
+    console.log("Sending request to API:", url);
+    console.log("Request body:", JSON.stringify(requestBody));
+    
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -39,11 +42,15 @@ export async function generateQuestionPaper(
       body: JSON.stringify(requestBody),
     });
 
+    console.log("API response status:", response.status);
+    
     if (!response.ok) {
       throw new Error(`API returned status ${response.status}`);
     }
 
     const data = await response.json();
+    console.log("API response data:", data);
+    
     return { 
       questions: data.questions || [], 
       success: true 

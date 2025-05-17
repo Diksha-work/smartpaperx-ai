@@ -60,6 +60,15 @@ const QuestionPaperGenerator = () => {
   // State for diagram generation
   const [generatedCode, setGeneratedCode] = useState<string>("");
   
+  // Force refresh to ensure updated API URL is used
+  const forceRefresh = () => {
+    console.log("Force refreshing component to use updated API URL");
+    setIsLoading(false);
+    setQuestions([]);
+    // This will cause React to re-render with fresh state
+    setBtlLevels([...btlLevels]);
+  };
+  
   useEffect(() => {
     if (subject && subjectInfo[subject as keyof typeof subjectInfo]) {
       setSubjectData(subjectInfo[subject as keyof typeof subjectInfo]);
@@ -87,11 +96,16 @@ const QuestionPaperGenerator = () => {
     setIsLoading(true);
     
     try {
+      console.log("Generating question paper with updated API URL");
       // Convert BtlLevels array to the format expected by the API
       const btlDistribution: {[key: string]: number} = {};
       btlLevels.forEach(btl => {
         btlDistribution[btl.level.toString()] = btl.percentage;
       });
+      
+      console.log("Subject:", subject);
+      console.log("Number of questions:", numQuestions);
+      console.log("BTL distribution:", btlDistribution);
       
       const result = await generateQuestionPaper(subject, numQuestions, btlDistribution);
       
@@ -104,7 +118,7 @@ const QuestionPaperGenerator = () => {
       } else {
         toast({
           title: "Error",
-          description: "Unable to generate question paper. Please try again later.",
+          description: result.error || "Unable to generate question paper. Please try again later.",
           variant: "destructive",
         });
       }
