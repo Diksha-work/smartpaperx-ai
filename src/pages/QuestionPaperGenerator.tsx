@@ -9,10 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { MermaidDiagramGenerator } from "@/components/ai/MermaidDiagramGenerator";
 import { DiagramCodeGenerator } from "@/components/ai/DiagramCodeGenerator";
-import { generateQuestionPaper } from "@/utils/questionPaperApiUtils";
+import { generateQuestionPaper, getApiBaseUrl } from "@/utils/questionPaperApiUtils";
 import { generateWithLangChain } from "@/utils/langchainUtils";
 import { generatePDF } from "@/utils/pdfUtils";
-import { FileText, Download } from "lucide-react";
+import { FileText, Download, RefreshCw } from "lucide-react";
 
 const subjectInfo = {
   "data-science": {
@@ -59,14 +59,20 @@ const QuestionPaperGenerator = () => {
   
   // State for diagram generation
   const [generatedCode, setGeneratedCode] = useState<string>("");
+  // Add state to track rerenders for cache busting
+  const [refreshCounter, setRefreshCounter] = useState(0);
   
   // Force refresh to ensure updated API URL is used
   const forceRefresh = () => {
     console.log("Force refreshing component to use updated API URL");
+    setRefreshCounter(prev => prev + 1);
     setIsLoading(false);
     setQuestions([]);
-    // This will cause React to re-render with fresh state
-    setBtlLevels([...btlLevels]);
+    // Show the current API URL
+    toast({
+      title: "Using API URL",
+      description: getApiBaseUrl(),
+    });
   };
   
   useEffect(() => {
@@ -96,7 +102,7 @@ const QuestionPaperGenerator = () => {
     setIsLoading(true);
     
     try {
-      console.log("Generating question paper with updated API URL");
+      console.log(`Generating question paper with API URL: ${getApiBaseUrl()} (refresh count: ${refreshCounter})`);
       // Convert BtlLevels array to the format expected by the API
       const btlDistribution: {[key: string]: number} = {};
       btlLevels.forEach(btl => {
@@ -230,7 +236,17 @@ const QuestionPaperGenerator = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">Configure Questions</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Configure Questions</h2>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={forceRefresh}
+                title="Refresh to use the latest API URL"
+              >
+                <RefreshCw className="h-4 w-4 mr-1" /> Refresh API
+              </Button>
+            </div>
             
             {isLocalApi ? (
               <>

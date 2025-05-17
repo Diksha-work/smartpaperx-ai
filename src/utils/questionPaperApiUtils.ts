@@ -15,12 +15,17 @@ interface QuestionPaperResponse {
   error?: string;
 }
 
+// This is the API URL that should be used - hardcoded here to ensure it's used
+const API_BASE_URL = "https://a9b5-2401-4900-33b6-d7b2-d46c-f7ae-6faf-9147.ngrok-free.app";
+
 export async function generateQuestionPaper(
   subject: string,
   numQuestions: number,
   btlDistribution: BtlDistribution
 ): Promise<QuestionPaperResponse> {
-  const url = "https://a9b5-2401-4900-33b6-d7b2-d46c-f7ae-6faf-9147.ngrok-free.app/generate_raw_questions";
+  // Add timestamp to ensure we don't get a cached version
+  const timestamp = Date.now();
+  const url = `${API_BASE_URL}/generate_raw_questions?_t=${timestamp}`;
   
   const apiSubject = subject === "data-science" ? "ds" : subject === "computer-networks" ? "cn" : "dbms";
   
@@ -31,15 +36,20 @@ export async function generateQuestionPaper(
   };
 
   try {
-    console.log("Sending request to API:", url);
+    console.log(`Using API URL: ${url} at ${new Date().toISOString()}`);
     console.log("Request body:", JSON.stringify(requestBody));
     
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
       },
       body: JSON.stringify(requestBody),
+      // Prevent browser from using cached responses
+      cache: "no-store"
     });
 
     console.log("API response status:", response.status);
@@ -63,4 +73,9 @@ export async function generateQuestionPaper(
       error: error instanceof Error ? error.message : "Unknown error occurred"
     };
   }
+}
+
+// Export this function to test if the correct URL is being used
+export function getApiBaseUrl() {
+  return API_BASE_URL;
 }
