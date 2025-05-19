@@ -16,7 +16,7 @@ interface QuestionPaperResponse {
 }
 
 // This is the API URL that should be used - hardcoded here to ensure it's used
-const API_BASE_URL = "https://a9b5-2401-4900-33b6-d7b2-d46c-f7ae-6faf-9147.ngrok-free.app";
+const API_BASE_URL = "https://4170-2401-4900-3316-8141-4955-684c-c237-8f23.ngrok-free.app/generate_raw_questions";
 
 export async function generateQuestionPaper(
   subject: string,
